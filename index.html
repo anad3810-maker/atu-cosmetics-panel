@@ -160,7 +160,7 @@
         </div>
     </div>
 
-    <!-- 🖥️ واجهة لوحة التحكم الرئيسية (مخفية حتى تسجيل الدخول) -->
+    <!-- 🖥️ واجهة لوحة التحكم الرئيسية -->
     <div id="mainAdminDashboard" class="hidden max-w-7xl mx-auto space-y-4">
         <!-- Header -->
         <header class="desktop-header text-white p-3.5 rounded-xl shadow-md flex flex-wrap justify-between items-center gap-2 border-b-4 border-amber-400">
@@ -172,19 +172,19 @@
                 </div>
             </div>
             <div class="flex items-center gap-2 flex-wrap">
+                <span id="totalStudentsCounterBadge" class="bg-emerald-950/80 text-emerald-200 px-2.5 py-1 rounded-lg text-[11px] font-extrabold border border-emerald-400/40">👥 الطلاب: 0</span>
                 <span id="loggedAdminBadge" class="bg-white/15 text-amber-200 px-2.5 py-1 rounded-lg text-[11px] font-bold border border-white/20"></span>
                 <div class="bg-white/10 p-1.5 rounded-lg border border-white/20 flex items-center gap-1.5 text-xs">
                     <span class="font-bold text-[11px]">الأسبوع الحالي:</span>
                     <input type="number" id="academicWeekInput" min="1" max="30" value="1" class="w-12 p-1 text-center font-bold text-slate-900 rounded bg-amber-300 text-xs">
                     <button onclick="saveCurrentAcademicWeek()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 px-2 py-1 rounded font-bold text-[10px] shadow">تثبيت</button>
                 </div>
-                <!-- 💾 أزرار النسخ الاحتياطي والاستعادة -->
                 <button onclick="downloadFullBackupJSON()" title="تحميل نسخة احتياطية كاملة على جهازك" class="bg-amber-400 hover:bg-amber-500 text-slate-950 px-2.5 py-1.5 rounded-lg font-extrabold text-xs shadow">💾 نسخة احتياطية</button>
                 <label id="restoreBackupLabel" title="استعادة البيانات من ملف نسخة احتياطية" class="hidden bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-xs shadow cursor-pointer">
                     📂 استعادة نسخة
                     <input type="file" id="restoreBackupInput" accept=".json" onchange="restoreFullBackupJSON(event)" class="hidden">
                 </label>
-                <button onclick="fetchData()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-2.5 py-1.5 rounded-lg font-bold text-xs shadow">🔄 مزامنة</button>
+                <button onclick="forceRefreshFromCloud()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-2.5 py-1.5 rounded-lg font-bold text-xs shadow">🔄 مزامنة</button>
                 <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-xs shadow">🚪 خروج</button>
             </div>
         </header>
@@ -198,7 +198,6 @@
                 <button onclick="switchTab('hol')" id="btnHol" class="tab-btn py-2 px-3.5 text-slate-600 rounded-lg hover:bg-slate-100 font-bold text-red-700">🏝️ العطل الرسمية والمناسبات</button>
                 <button onclick="switchTab('grp')" id="btnGrp" class="tab-btn py-2 px-3.5 text-slate-600 rounded-lg hover:bg-slate-100">رفع وتدقيق الطلاب (Excel)</button>
                 <button onclick="switchTab('memo')" id="btnMemo" class="tab-btn py-2 px-3.5 text-slate-600 rounded-lg hover:bg-slate-100">📋 قسم المذكرات والأوامر الإدارية</button>
-                <!-- 👑 تبويب إدارة المشرفين - يظهر للأونر فقط -->
                 <button onclick="switchTab('admins')" id="btnAdmins" class="hidden tab-btn py-2 px-3.5 bg-amber-100 text-amber-950 border border-amber-400 rounded-lg hover:bg-amber-200 font-extrabold">👑 إدارة المشرفين (الأونر)</button>
             </div>
 
@@ -436,7 +435,6 @@
 
             <!-- TAB 6: MEMO & ADMINISTRATIVE ORDER -->
             <div id="tabMemo" class="space-y-4 hidden text-xs">
-                
                 <div class="flex border-b border-slate-300 gap-2 pb-2 no-print">
                     <button onclick="switchMemoSubTab('adminOrder')" id="btnSubTabAdmin" class="py-2 px-4 bg-emerald-800 text-white font-bold rounded-lg shadow">
                         📄 الأمر الإداري بغيابات الطلبة (النموذج الرسمي)
@@ -688,10 +686,9 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            <!-- 👑 TAB 7: OWNER ADMINS MANAGEMENT (ONLY VISIBLE TO OWNER) -->
+            <!-- 👑 TAB 7: OWNER ADMINS MANAGEMENT -->
             <div id="tabAdmins" class="space-y-4 hidden text-xs">
                 <div class="bg-amber-50 p-4 rounded-xl border-2 border-amber-300 space-y-3">
                     <div class="flex items-center justify-between border-b border-amber-200 pb-2">
@@ -749,15 +746,16 @@
     </div>
 
     <script>
-        // 🔐 بيانات الأونر الثابتة في النظام
         const SYSTEM_OWNER = {
             email: "ownerkarrar.f@atunajaf.com",
             password: "Karrar1992",
             name: "كرار (المالك الأساسي - Owner)"
         };
 
-        let currentLoggedRole = null; // 'OWNER' or 'ADMIN'
+        let currentLoggedRole = null;
         let currentLoggedUser = null;
+        let isInitialLoadDone = false;
+        let isSavingNow = false;
 
         window.addEventListener('DOMContentLoaded', () => {
             const hideSplash = () => {
@@ -780,11 +778,23 @@
         let currentAuditStage = 'المرحلة الأولى';
         let copiedStyleStore = null;
 
-        function safeKey(email) {
-            return email.toLowerCase().replace(/\./g, '_dot_').replace(/@/g, '_at_').trim();
+        // 🛡️ دالة تحويل الكائنات المتقطعة في Firebase إلى مصفوفة نظيفة دون ضياع أي عنصر
+        function normalizeArray(val) {
+            if (!val) return [];
+            if (Array.isArray(val)) return val.filter(item => item !== null && item !== undefined);
+            if (typeof val === 'object') {
+                return Object.keys(val)
+                    .sort((a, b) => Number(a) - Number(b))
+                    .map(k => val[k])
+                    .filter(item => item !== null && item !== undefined);
+            }
+            return [];
         }
 
-        // 🔐 التحقق من تسجيل الدخول للأونر والمشرفين
+        function safeKey(email) {
+            return String(email || '').toLowerCase().replace(/\./g, '_dot_').replace(/@/g, '_at_').trim();
+        }
+
         function verifyAdminLogin() {
             const emailInput = document.getElementById('adminLoginEmail').value.trim().toLowerCase();
             const passInput = document.getElementById('adminLoginPass').value.trim();
@@ -846,7 +856,6 @@
             switchTab('att');
         }
 
-        // 💾 تحميل نسخة احتياطية كاملة بصيغة JSON
         function downloadFullBackupJSON() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
             const downloadAnchor = document.createElement('a');
@@ -858,7 +867,6 @@
             downloadAnchor.remove();
         }
 
-        // 📂 استعادة نسخة احتياطية من ملف JSON (للأونر فقط)
         function restoreFullBackupJSON(event) {
             if (currentLoggedRole !== 'OWNER') return;
             const file = event.target.files[0];
@@ -875,15 +883,16 @@
                     const parsedData = JSON.parse(e.target.result);
                     if (parsedData && typeof parsedData === 'object') {
                         db.teachers = parsedData.teachers || {};
-                        db.students = parsedData.students || [];
+                        db.students = normalizeArray(parsedData.students);
                         db.memoTemplates = parsedData.memoTemplates || {};
                         db.holidays = parsedData.holidays || {};
                         db.currentAcademicWeek = parsedData.currentAcademicWeek || 1;
                         db.subjectConfigs = parsedData.subjectConfigs || {};
                         db.admins = parsedData.admins || {};
 
+                        isInitialLoadDone = true;
                         saveToCloud();
-                        alert("✅ تم استعادة النسخة الاحتياطية ورفعها إلى السحابة بنجاح!");
+                        alert(`✅ تم استعادة النسخة الاحتياطية (${db.students.length} طالب) ورفعها إلى السحابة بنجاح!`);
                     } else {
                         alert("❌ الملف غير صالح أو تالف.");
                     }
@@ -895,7 +904,6 @@
             reader.readAsText(file);
         }
 
-        // 👑 إدارة المشرفين من قبل الأونر فقط
         function addSubAdmin() {
             if (currentLoggedRole !== 'OWNER') return;
             const name = document.getElementById('newAdminName').value.trim();
@@ -1009,63 +1017,108 @@
             return false;
         }
 
-        window.onload = function() { fetchData(); };
+        window.onload = function() { startRealtimeSync(); };
 
-        // 🛡️ جلب البيانات الآمن (يمنع مسح السحابة عند انقطاع الشبكة)
-        function fetchData() {
-            document.getElementById('statusText').innerText = "⚡ جاري الاتصال بالسحابة...";
-            dbRef.on('value', (snapshot) => {
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    db.teachers = data.teachers || {};
-                    db.students = data.students || [];
-                    db.memoTemplates = data.memoTemplates || {};
-                    db.holidays = data.holidays || {};
-                    db.currentAcademicWeek = data.currentAcademicWeek || 1;
-                    db.subjectConfigs = data.subjectConfigs || {};
-                    db.admins = data.admins || {};
-
-                    document.getElementById('academicWeekInput').value = db.currentAcademicWeek;
-                    document.getElementById('statusText').innerText = "✅ متصل بالسحابة بنجاح (مزامنة آمنة)";
-                } else {
-                    document.getElementById('statusText').innerText = "⚠️ السحابة فارغة حالياً (في انتظار الإدخال)";
-                }
+        function processIncomingSnapshot(snapshot) {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
                 
-                if(window._hideSplash) window._hideSplash();
-
-                if (currentLoggedRole === 'ADMIN' && currentLoggedUser) {
-                    const k = safeKey(currentLoggedUser.email);
-                    if (!db.admins || !db.admins[k]) {
-                        alert("⚠️ تم سحب صلاحية الإشراف الخاصة بك من قبل الأونر.");
-                        logoutAdmin();
-                        return;
+                // تطبيع بيانات الأساتذة وضمان أن محاضراتهم مصفوفة نظيفة دائماً
+                const rawTeachers = data.teachers || {};
+                const cleanTeachers = {};
+                for (let k in rawTeachers) {
+                    if (rawTeachers[k]) {
+                        cleanTeachers[k] = {
+                            ...rawTeachers[k],
+                            lectures: normalizeArray(rawTeachers[k].lectures)
+                        };
                     }
                 }
+                db.teachers = cleanTeachers;
 
-                updateWeeksDropdown();
-                updateTeachersDropdown();
-                updateTemplatesDropdown();
-                updateSubjectFilterDropdown();
-                renderUI();
-                renderHolidaysTable();
-                renderSubjectConfigsTable();
-                renderAuditButtons(currentAuditStage);
-                generateAdminMemo();
-                if (currentLoggedRole === 'OWNER') renderAdminsTable();
+                // تطبيع بيانات الطلاب وسجلات غياباتهم لمنع فقدان أي طالب إذا تحول إلى Object في Firebase
+                const rawStudents = normalizeArray(data.students);
+                db.students = rawStudents.map(st => ({
+                    ...st,
+                    attendanceLog: normalizeArray(st.attendanceLog)
+                }));
+
+                db.memoTemplates = data.memoTemplates || {};
+                db.holidays = data.holidays || {};
+                db.currentAcademicWeek = data.currentAcademicWeek || 1;
+                db.subjectConfigs = data.subjectConfigs || {};
+                db.admins = data.admins || {};
+
+                isInitialLoadDone = true;
+                document.getElementById('academicWeekInput').value = db.currentAcademicWeek;
+                document.getElementById('totalStudentsCounterBadge').innerText = `👥 الطلاب: ${db.students.length}`;
+                document.getElementById('statusText').innerText = `✅ متصل بالسحابة (${db.students.length} طالب | ${Object.keys(db.teachers).length} أستاذ)`;
+            } else {
+                document.getElementById('statusText').innerText = "⚠️ السحابة فارغة حالياً (في انتظار الإدخال)";
+            }
+            
+            if(window._hideSplash) window._hideSplash();
+
+            if (currentLoggedRole === 'ADMIN' && currentLoggedUser) {
+                const k = safeKey(currentLoggedUser.email);
+                if (!db.admins || !db.admins[k]) {
+                    alert("⚠️ تم سحب صلاحية الإشراف الخاصة بك من قبل الأونر.");
+                    logoutAdmin();
+                    return;
+                }
+            }
+
+            updateWeeksDropdown();
+            updateTeachersDropdown();
+            updateTemplatesDropdown();
+            updateSubjectFilterDropdown();
+            renderUI();
+            renderHolidaysTable();
+            renderSubjectConfigsTable();
+            renderAuditButtons(currentAuditStage);
+            generateAdminMemo();
+            if (currentLoggedRole === 'OWNER') renderAdminsTable();
+        }
+
+        // 🛡️ الاستماع اللحظي الآمن للسحابة
+        function startRealtimeSync() {
+            document.getElementById('statusText').innerText = "⚡ جاري الاتصال بالسحابة...";
+            dbRef.off('value');
+            dbRef.on('value', (snapshot) => {
+                if (isSavingNow) return; // تجاهل التحديثات المرتدة أثناء عملية الحفظ الجارية
+                processIncomingSnapshot(snapshot);
             }, (error) => {
                 document.getElementById('statusText').innerText = "❌ خطأ في الاتصال بالسحابة";
                 if(window._hideSplash) window._hideSplash();
             });
         }
 
-        // 🛡️ دالة الحفظ الموضعي الآمن (تمنع الكتابة فوق بيانات الأساتذة المتزامنة)
+        // 🔄 مزامنة يدوية فورية من السحابة
+        function forceRefreshFromCloud() {
+            document.getElementById('statusText').innerText = "🔄 جاري سحب أحدث البيانات من السحابة...";
+            dbRef.once('value').then((snapshot) => {
+                isSavingNow = false;
+                processIncomingSnapshot(snapshot);
+            });
+        }
+
+        // 🛡️ دالة الحفظ الموضعي الآمن مع قفل الحماية من الكتابة فوق بيانات غير مكتملة
         function saveToCloud(specificPath = null) {
+            if (!isInitialLoadDone && specificPath !== 'admins') {
+                alert("⚠️ انتظر اكتمال تحميل البيانات من السحابة أولاً قبل الحفظ لحماية بياناتك من الاستبدال!");
+                return;
+            }
+
+            isSavingNow = true;
             document.getElementById('statusText').innerText = "⏳ جاري الحفظ في السحابة...";
             
             if (specificPath && db[specificPath] !== undefined) {
                 dbRef.child(specificPath).set(db[specificPath]).then(() => {
-                    document.getElementById('statusText').innerText = "✅ تم الحفظ سحابياً بنجاح";
+                    isSavingNow = false;
+                    document.getElementById('totalStudentsCounterBadge').innerText = `👥 الطلاب: ${db.students.length}`;
+                    document.getElementById('statusText').innerText = `✅ تم الحفظ سحابياً (${db.students.length} طالب)`;
                 }).catch((err) => {
+                    isSavingNow = false;
                     alert("❌ فشل الحفظ في السحابة: " + err.message);
                 });
                 return;
@@ -1080,8 +1133,11 @@
                 subjectConfigs: db.subjectConfigs || {},
                 admins: db.admins || {}
             }).then(() => {
-                document.getElementById('statusText').innerText = "✅ تم الحفظ والمزامنة سحابياً";
+                isSavingNow = false;
+                document.getElementById('totalStudentsCounterBadge').innerText = `👥 الطلاب: ${db.students.length}`;
+                document.getElementById('statusText').innerText = `✅ تم الحفظ والمزامنة (${db.students.length} طالب)`;
             }).catch((err) => {
+                isSavingNow = false;
                 alert("❌ فشل الحفظ في السحابة، تحقق من اتصال الإنترنت: " + err.message);
             });
         }
@@ -1324,8 +1380,9 @@
             if(db.teachers) {
                 for(let key in db.teachers) {
                     let t = db.teachers[key];
-                    let lecturesText = (t.lectures && t.lectures.length > 0) 
-                        ? t.lectures.map((l, idx) => `
+                    let lecs = normalizeArray(t.lectures);
+                    let lecturesText = (lecs.length > 0) 
+                        ? lecs.map((l, idx) => `
                             <div class="flex items-center justify-between bg-slate-50 p-1.5 rounded my-1 border shadow-sm">
                                 <span><b class="text-emerald-900">[${l.day}]</b> ${l.subject} (شعبة ${l.group} - <span class="text-emerald-700 font-bold">${l.study || 'صباحي'}</span>) - ${l.time}</span>
                                 <div class="space-x-1 space-x-reverse">
@@ -1503,6 +1560,7 @@
         function updateTeachersDropdown() {
             let select = document.getElementById('tSelectTeacher');
             if(!select) return;
+            let currentVal = select.value;
             let html = `<option value="">-- اختر أستاذاً لإسناد المحاضرة --</option>`;
             if(db.teachers && Object.keys(db.teachers).length > 0) {
                 for(let key in db.teachers) {
@@ -1513,6 +1571,7 @@
                 html = `<option value="">-- لا يوجد أساتذة مسجلين --</option>`;
             }
             select.innerHTML = html;
+            if (currentVal && db.teachers[currentVal]) select.value = currentVal;
         }
 
         function updateTemplatesDropdown() {
@@ -1615,7 +1674,7 @@
             const oldKey = document.getElementById('editingTeacherKey').value;
             const name = document.getElementById('tName').value.trim();
             const phone = document.getElementById('tPhone').value.trim();
-            const rawEmail = document.getElementById('tEmail').value.trim();
+            const rawEmail = document.getElementById('tEmail').value.trim().toLowerCase();
             const pass = document.getElementById('tPass').value.trim();
 
             if(!name || !rawEmail || !pass) { alert('يرجى كتابة الاسم والإيميل وكلمة المرور'); return; }
@@ -1624,11 +1683,13 @@
             if(!db.teachers) db.teachers = {};
 
             if(oldKey) {
-                let existingLectures = (db.teachers[oldKey] && db.teachers[oldKey].lectures) ? db.teachers[oldKey].lectures : [];
+                let existingLectures = (db.teachers[oldKey] && db.teachers[oldKey].lectures) ? normalizeArray(db.teachers[oldKey].lectures) : [];
                 if(oldKey !== newKey) delete db.teachers[oldKey];
                 db.teachers[newKey] = { name, phone, email: rawEmail, password: pass, lectures: existingLectures };
             } else {
-                db.teachers[newKey] = { name, phone, email: rawEmail, password: pass, lectures: [] };
+                // الحفاظ على المحاضرات إذا كان الأستاذ مسجلاً مسبقاً بنفس البريد
+                let existingLectures = (db.teachers[newKey] && db.teachers[newKey].lectures) ? normalizeArray(db.teachers[newKey].lectures) : [];
+                db.teachers[newKey] = { name, phone, email: rawEmail, password: pass, lectures: existingLectures };
             }
 
             saveToCloud('teachers');
@@ -1638,8 +1699,10 @@
         }
 
         function editLecture(teacherKey, lecIndex) {
-            if(!db.teachers[teacherKey] || !db.teachers[teacherKey].lectures[lecIndex]) return;
-            let lec = db.teachers[teacherKey].lectures[lecIndex];
+            if(!db.teachers[teacherKey]) return;
+            let lecs = normalizeArray(db.teachers[teacherKey].lectures);
+            if(!lecs[lecIndex]) return;
+            let lec = lecs[lecIndex];
 
             document.getElementById('editingLecTeacherKey').value = teacherKey;
             document.getElementById('editingLecIndex').value = lecIndex;
@@ -1678,23 +1741,28 @@
 
             if(!key || !sub) { alert('يرجى اختيار الأستاذ وكتابة اسم المادة'); return; }
 
-            if(editingLecIndex >= 0 && editingTeacherKey) {
-                let oldLectures = db.teachers[editingTeacherKey].lectures;
-                let existingWeeklySubmissions = oldLectures[editingLecIndex].weeklySubmissions || {};
+            if(editingLecIndex >= 0 && editingTeacherKey && db.teachers[editingTeacherKey]) {
+                let oldLectures = normalizeArray(db.teachers[editingTeacherKey].lectures);
+                let existingWeeklySubmissions = (oldLectures[editingLecIndex] && oldLectures[editingLecIndex].weeklySubmissions) ? oldLectures[editingLecIndex].weeklySubmissions : {};
                 let newLecObj = { day, subject: sub, group: grp, study, time: time || '08:30', weeklySubmissions: existingWeeklySubmissions };
 
                 if(editingTeacherKey !== key) {
                     oldLectures.splice(editingLecIndex, 1);
-                    if(!db.teachers[key].lectures) db.teachers[key].lectures = [];
-                    db.teachers[key].lectures.push(newLecObj);
+                    db.teachers[editingTeacherKey].lectures = oldLectures;
+                    let targetLecs = normalizeArray(db.teachers[key].lectures);
+                    targetLecs.push(newLecObj);
+                    db.teachers[key].lectures = targetLecs;
                 } else {
-                    db.teachers[key].lectures[editingLecIndex] = newLecObj;
+                    oldLectures[editingLecIndex] = newLecObj;
+                    db.teachers[key].lectures = oldLectures;
                 }
             } else {
-                if(!db.teachers[key].lectures) db.teachers[key].lectures = [];
-                db.teachers[key].lectures.push({ day, subject: sub, group: grp, study: study || 'صباحي', time: time || '08:30' });
+                let currentLecs = normalizeArray(db.teachers[key].lectures);
+                currentLecs.push({ day, subject: sub, group: grp, study: study || 'صباحي', time: time || '08:30' });
+                db.teachers[key].lectures = currentLecs;
             }
 
+            // حفظ محاضرات الأستاذ المحدد بدقة لمنع مسح محاضرات بقية الأساتذة
             saveToCloud('teachers');
             resetLectureForm();
             renderUI();
@@ -1711,17 +1779,20 @@
 
         function deleteLecture(key, index) {
             if(confirm('حذف هذه الحصة؟')) {
-                db.teachers[key].lectures.splice(index, 1);
+                let lecs = normalizeArray(db.teachers[key].lectures);
+                lecs.splice(index, 1);
+                db.teachers[key].lectures = lecs;
                 saveToCloud('teachers');
                 renderUI();
             }
         }
 
         function unlockLectureForTeacher(teacherKey, lecIdx, weekName) {
-            if(db.teachers && db.teachers[teacherKey] && db.teachers[teacherKey].lectures[lecIdx]) {
-                let lec = db.teachers[teacherKey].lectures[lecIdx];
-                if(lec.weeklySubmissions && lec.weeklySubmissions[weekName]) {
-                    delete lec.weeklySubmissions[weekName];
+            if(db.teachers && db.teachers[teacherKey]) {
+                let lecs = normalizeArray(db.teachers[teacherKey].lectures);
+                if(lecs[lecIdx] && lecs[lecIdx].weeklySubmissions && lecs[lecIdx].weeklySubmissions[weekName]) {
+                    delete lecs[lecIdx].weeklySubmissions[weekName];
+                    db.teachers[teacherKey].lectures = lecs;
                     saveToCloud('teachers');
                     renderUI();
                     alert(`✅ تم فتح المحاضرة بنجاح!`);
@@ -1736,17 +1807,16 @@
             if(db.teachers) {
                 for(let key in db.teachers) {
                     let teacher = db.teachers[key];
-                    if(teacher.lectures) {
-                        teacher.lectures.forEach((lec, idx) => {
-                            if(lec.weeklySubmissions) {
-                                for(let week in lec.weeklySubmissions) {
-                                    if(lec.weeklySubmissions[week] === true) {
-                                        lockedList.push({ key, teacherName: teacher.name, subject: lec.subject, group: lec.group, study: lec.study || 'صباحي', week, lecIdx: idx });
-                                    }
+                    let lecs = normalizeArray(teacher.lectures);
+                    lecs.forEach((lec, idx) => {
+                        if(lec.weeklySubmissions) {
+                            for(let week in lec.weeklySubmissions) {
+                                if(lec.weeklySubmissions[week] === true) {
+                                    lockedList.push({ key, teacherName: teacher.name, subject: lec.subject, group: lec.group, study: lec.study || 'صباحي', week, lecIdx: idx });
                                 }
                             }
-                        });
-                    }
+                        }
+                    });
                 }
             }
 
@@ -2103,7 +2173,7 @@
                 generateAdminMemo();
                 renderAuditButtons(currentAuditStage);
                 previewGroupStudents(targetStage, targetGroup, targetStudy);
-                alert(`✅ تم رفع (${addedCount}) طالب بنجاح!`);
+                alert(`✅ تم رفع (${addedCount}) طالب بنجاح! المجموع الكلي الآن: ${db.students.length} طالب.`);
             };
             reader.readAsArrayBuffer(file);
         }
