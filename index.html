@@ -526,9 +526,8 @@
                                     <thead>
                                         <tr class="bg-slate-100 font-bold">
                                             <th rowspan="2" style="width: 3.5%;">ت</th>
-                                            <th rowspan="2" style="width: 25%;">اسم الطالب</th>
-                                            <th rowspan="2" style="width: 5.5%;">الجنس</th>
-                                            <th rowspan="2" style="width: 6%;">الشعبة</th>
+                                            <th rowspan="2" style="width: 28%;">اسم الطالب</th>
+                                            <th rowspan="2" style="width: 8.5%;">الشعبة</th>
                                             <th id="memoSubjectSuperHeader" colspan="7" class="bg-slate-200">المواد الدراسية (العقوبة الآلية حسب غيابات الأساتذة ونسب الكورس)</th>
                                         </tr>
                                         <tr id="memoSubjectsHeader" class="bg-emerald-50/90"></tr>
@@ -778,7 +777,6 @@
         let currentAuditStage = 'المرحلة الأولى';
         let copiedStyleStore = null;
 
-        // 🛡️ دالة تحويل الكائنات المتقطعة في Firebase إلى مصفوفة نظيفة دون ضياع أي عنصر
         function normalizeArray(val) {
             if (!val) return [];
             if (Array.isArray(val)) return val.filter(item => item !== null && item !== undefined);
@@ -1023,7 +1021,6 @@
             if (snapshot.exists()) {
                 const data = snapshot.val();
                 
-                // تطبيع بيانات الأساتذة وضمان أن محاضراتهم مصفوفة نظيفة دائماً
                 const rawTeachers = data.teachers || {};
                 const cleanTeachers = {};
                 for (let k in rawTeachers) {
@@ -1036,7 +1033,6 @@
                 }
                 db.teachers = cleanTeachers;
 
-                // تطبيع بيانات الطلاب وسجلات غياباتهم لمنع فقدان أي طالب إذا تحول إلى Object في Firebase
                 const rawStudents = normalizeArray(data.students);
                 db.students = rawStudents.map(st => ({
                     ...st,
@@ -1080,12 +1076,11 @@
             if (currentLoggedRole === 'OWNER') renderAdminsTable();
         }
 
-        // 🛡️ الاستماع اللحظي الآمن للسحابة
         function startRealtimeSync() {
             document.getElementById('statusText').innerText = "⚡ جاري الاتصال بالسحابة...";
             dbRef.off('value');
             dbRef.on('value', (snapshot) => {
-                if (isSavingNow) return; // تجاهل التحديثات المرتدة أثناء عملية الحفظ الجارية
+                if (isSavingNow) return;
                 processIncomingSnapshot(snapshot);
             }, (error) => {
                 document.getElementById('statusText').innerText = "❌ خطأ في الاتصال بالسحابة";
@@ -1093,7 +1088,6 @@
             });
         }
 
-        // 🔄 مزامنة يدوية فورية من السحابة
         function forceRefreshFromCloud() {
             document.getElementById('statusText').innerText = "🔄 جاري سحب أحدث البيانات من السحابة...";
             dbRef.once('value').then((snapshot) => {
@@ -1102,7 +1096,6 @@
             });
         }
 
-        // 🛡️ دالة الحفظ الموضعي الآمن مع قفل الحماية من الكتابة فوق بيانات غير مكتملة
         function saveToCloud(specificPath = null) {
             if (!isInitialLoadDone && specificPath !== 'admins') {
                 alert("⚠️ انتظر اكتمال تحميل البيانات من السحابة أولاً قبل الحفظ لحماية بياناتك من الاستبدال!");
@@ -1492,14 +1485,13 @@
                     <tr class="hover:bg-slate-50">
                         <td class="font-bold">${counter++}</td>
                         <td class="text-right font-bold pr-2">${st.name}</td>
-                        <td class="font-bold text-slate-700">${st.gender || 'أنثى'}</td>
                         <td class="font-bold">${st.group} (${st.study || 'صباحي'})</td>
                         ${cellsHtml}
                     </tr>
                 `);
             });
 
-            document.getElementById('memoAdminTableBody').innerHTML = rowsHtml.join('') || `<tr><td colspan="${subjects.length + 4}" class="p-4 text-center text-slate-400 font-bold">لا يوجد طلبة خاضعون للعقوبة الأكاديمية ضمن التصفية المحددة.</td></tr>`;
+            document.getElementById('memoAdminTableBody').innerHTML = rowsHtml.join('') || `<tr><td colspan="${subjects.length + 3}" class="p-4 text-center text-slate-400 font-bold">لا يوجد طلبة خاضعون للعقوبة الأكاديمية ضمن التصفية المحددة.</td></tr>`;
         }
 
         function exportAdminMemoToExcel() {
@@ -1522,7 +1514,6 @@
                 let rowObj = {
                     "ت": counter,
                     "اسم الطالب": st.name,
-                    "الجنس": st.gender || 'أنثى',
                     "الشعبة والدراسة": `${st.group} (${st.study || 'صباحي'})`
                 };
 
@@ -1687,7 +1678,6 @@
                 if(oldKey !== newKey) delete db.teachers[oldKey];
                 db.teachers[newKey] = { name, phone, email: rawEmail, password: pass, lectures: existingLectures };
             } else {
-                // الحفاظ على المحاضرات إذا كان الأستاذ مسجلاً مسبقاً بنفس البريد
                 let existingLectures = (db.teachers[newKey] && db.teachers[newKey].lectures) ? normalizeArray(db.teachers[newKey].lectures) : [];
                 db.teachers[newKey] = { name, phone, email: rawEmail, password: pass, lectures: existingLectures };
             }
@@ -1762,7 +1752,6 @@
                 db.teachers[key].lectures = currentLecs;
             }
 
-            // حفظ محاضرات الأستاذ المحدد بدقة لمنع مسح محاضرات بقية الأساتذة
             saveToCloud('teachers');
             resetLectureForm();
             renderUI();
