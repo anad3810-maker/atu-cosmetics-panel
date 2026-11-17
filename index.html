@@ -204,7 +204,13 @@
             <!-- TAB 1: ATTENDANCE -->
             <div id="tabAtt" class="space-y-4 text-xs">
                 <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200 space-y-3">
-                    <h3 class="font-bold text-emerald-900 text-sm">📥 تصدير تقارير الغيابات والتصفية:</h3>
+                    <div class="flex flex-wrap justify-between items-center gap-2">
+                        <h3 class="font-bold text-emerald-900 text-sm">📥 تصدير تقارير الغيابات والتصفية:</h3>
+                        <label class="flex items-center gap-1.5 bg-white px-3 py-1 rounded-lg border border-emerald-300 cursor-pointer font-bold text-emerald-950">
+                            <input type="checkbox" id="filterOnlyAbsentInPeriod" onchange="renderUI()" class="w-4 h-4 accent-emerald-800">
+                            <span>إظهار الطلبة الذين لديهم غيابات خلال الفترة المحددة فقط</span>
+                        </label>
+                    </div>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-6 gap-3">
                         <div>
@@ -475,6 +481,10 @@
                                 <option value="ALL">جميع الدراسات (صباحي + مسائي)</option>
                                 <option value="صباحي">الدراسة الصباحية فقط</option>
                                 <option value="مسائي">الدراسة المسائية فقط</option>
+                            </select>
+
+                            <select id="memoFilterWeek" onchange="generateAdminMemo()" class="p-1.5 border rounded-lg bg-white font-bold text-xs text-amber-900">
+                                <option value="ALL">كافة الأسابيع (تراكمي)</option>
                             </select>
                             
                             <div class="flex items-center gap-1 border-r pr-2">
@@ -777,6 +787,31 @@
         let currentAuditStage = 'المرحلة الأولى';
         let copiedStyleStore = null;
 
+        function generateUniqueStudentId(index = 0) {
+            return `st_${Date.now()}_${index}_${Math.floor(100000 + Math.random() * 900000)}`;
+        }
+
+        // 🛡️ فحص وإصلاح أي معرّف طالب مكرر تلقائياً لمنع تداخل بيانات الطلاب
+        function ensureUniqueStudentIds(studentsList) {
+            const seen = new Set();
+            let hasDuplicates = false;
+            const fixedList = studentsList.map((st, idx) => {
+                let sid = String(st.id || '').trim();
+                if (!sid || seen.has(sid)) {
+                    hasDuplicates = true;
+                    sid = generateUniqueStudentId(idx);
+                    while (seen.has(sid)) {
+                        sid = generateUniqueStudentId(idx + Math.floor(Math.random() * 1000));
+                    }
+                    seen.add(sid);
+                    return { ...st, id: sid };
+                }
+                seen.add(sid);
+                return st;
+            });
+            return { fixedList, hasDuplicates };
+        }
+
         function normalizeArray(val) {
             if (!val) return [];
             if (Array.isArray(val)) return val.filter(item => item !== null && item !== undefined);
@@ -881,7 +916,8 @@
                     const parsedData = JSON.parse(e.target.result);
                     if (parsedData && typeof parsedData === 'object') {
                         db.teachers = parsedData.teachers || {};
-                        db.students = normalizeArray(parsedData.students);
+                        const { fixedList } = ensureUniqueStudentIds(normalizeArray(parsedData.students));
+                        db.students = fixedList;
                         db.memoTemplates = parsedData.memoTemplates || {};
                         db.holidays = parsedData.holidays || {};
                         db.currentAcademicWeek = parsedData.currentAcademicWeek || 1;
@@ -1033,11 +1069,13 @@
                 }
                 db.teachers = cleanTeachers;
 
-                const rawStudents = normalizeArray(data.students);
-                db.students = rawStudents.map(st => ({
+                const rawStudents = normalizeArray(data.students).map(st => ({
                     ...st,
                     attendanceLog: normalizeArray(st.attendanceLog)
                 }));
+
+                const { fixedList, hasDuplicates } = ensureUniqueStudentIds(rawStudents);
+                db.students = fixedList;
 
                 db.memoTemplates = data.memoTemplates || {};
                 db.holidays = data.holidays || {};
@@ -1046,6 +1084,15 @@
                 db.admins = data.admins || {};
 
                 isInitialLoadDone = true;
+
+                // إذا تم اكتشاف معرّفات مكررة، نحفظ التصحيح في السحابة فوراً بصمت
+                if (hasDuplicates) {
+                    isSavingNow = true;
+                    dbRef.child('students').set(db.students).finally(() => {
+                        isSavingNow = false;
+                    });
+                }
+
                 document.getElementById('academicWeekInput').value = db.currentAcademicWeek;
                 document.getElementById('totalStudentsCounterBadge').innerText = `👥 الطلاب: ${db.students.length}`;
                 document.getElementById('statusText').innerText = `✅ متصل بالسحابة (${db.students.length} طالب | ${Object.keys(db.teachers).length} أستاذ)`;
@@ -1265,10 +1312,26 @@
             student.absenceHours = total;
         }
 
-        function calculatePenaltyForSubject(student, subjectName, startDate = null, endDate = null) {
+        // ⏱️ استخراج معايير الفلترة الزمنية للتبويب الأول
+        function getActiveTimeFilter() {
+            const mode = document.getElementById('exportTimeMode') ? document.getElementById('exportTimeMode').value : 'CUMULATIVE';
+            if (mode === 'WEEK') {
+                const weekVal = document.getElementById('exportWeek') ? document.getElementById('exportWeek').value : 'ALL';
+                return { week: weekVal !== 'ALL' ? weekVal : null, startDate: null, endDate: null };
+            }
+            if (mode === 'DATE_RANGE') {
+                const sDate = document.getElementById('startDate') ? document.getElementById('startDate').value : null;
+                const eDate = document.getElementById('endDate') ? document.getElementById('endDate').value : null;
+                return { week: null, startDate: sDate || null, endDate: eDate || null };
+            }
+            return { week: null, startDate: null, endDate: null };
+        }
+
+        function calculatePenaltyForSubject(student, subjectName, startDate = null, endDate = null, weekFilter = null) {
             let logs = student.attendanceLog || [];
             let subLogs = logs.filter(l => {
                 if (l.status !== 'ABSENT' || !checkSubjectMatch(l.subject, subjectName)) return false;
+                if (weekFilter && weekFilter !== 'ALL' && l.week !== weekFilter) return false;
                 if (startDate && l.date && l.date < startDate) return false;
                 if (endDate && l.date && l.date > endDate) return false;
                 return true;
@@ -1328,6 +1391,8 @@
             let selStudy = document.getElementById('exportStudy').value;
             let selSubject = document.getElementById('exportSubjectFilter').value;
             let searchQuery = document.getElementById('searchStudentName') ? document.getElementById('searchStudentName').value.trim().toLowerCase() : '';
+            let onlyAbsentChecked = document.getElementById('filterOnlyAbsentInPeriod') ? document.getElementById('filterOnlyAbsentInPeriod').checked : false;
+            let timeFilter = getActiveTimeFilter();
             
             let subjects = getDefinedSubjectsList();
 
@@ -1335,13 +1400,22 @@
                 let matchG = matchesGroup(s.group, selGroup);
                 let matchS = matchesStudy(s.study, selStudy);
                 let matchName = !searchQuery || (s.name && s.name.toLowerCase().includes(searchQuery));
-                return matchG && matchS && matchName;
+                if (!matchG || !matchS || !matchName) return false;
+
+                if (onlyAbsentChecked) {
+                    let hasAbsenceInPeriod = subjects.some(sub => {
+                        if (selSubject !== 'ALL' && !checkSubjectMatch(sub, selSubject)) return false;
+                        return calculatePenaltyForSubject(s, sub, timeFilter.startDate, timeFilter.endDate, timeFilter.week).absenceHours > 0;
+                    });
+                    if (!hasAbsenceInPeriod) return false;
+                }
+                return true;
             });
 
             document.getElementById('attTable').innerHTML = displayedStudents.map(s => {
                 let subjectDetailsHtml = subjects.map(sub => {
                     if(selSubject !== 'ALL' && !checkSubjectMatch(sub, selSubject)) return '';
-                    let res = calculatePenaltyForSubject(s, sub);
+                    let res = calculatePenaltyForSubject(s, sub, timeFilter.startDate, timeFilter.endDate, timeFilter.week);
                     let badgeClass = getPenaltyBadgeClass(res.penalty);
 
                     return `
@@ -1420,6 +1494,7 @@
             const filterPenalty = document.getElementById('memoFilterPenalty') ? document.getElementById('memoFilterPenalty').value : 'ALL_PUNISHED';
             const filterGroup = document.getElementById('memoFilterGroup') ? document.getElementById('memoFilterGroup').value : 'ALL';
             const filterStudy = document.getElementById('memoFilterStudy') ? document.getElementById('memoFilterStudy').value : 'ALL';
+            const filterWeek = document.getElementById('memoFilterWeek') ? document.getElementById('memoFilterWeek').value : 'ALL';
 
             const startDate = document.getElementById('memoStartDate') ? document.getElementById('memoStartDate').value : null;
             const endDate = document.getElementById('memoEndDate') ? document.getElementById('memoEndDate').value : null;
@@ -1452,7 +1527,7 @@
                 let hasPunishment = false;
 
                 subjects.forEach(sub => {
-                    let res = calculatePenaltyForSubject(st, sub, startDate, endDate);
+                    let res = calculatePenaltyForSubject(st, sub, startDate, endDate, filterWeek !== 'ALL' ? filterWeek : null);
                     subjectPenaltyMap[sub] = res.penalty;
                     if (res.penalty !== 'بدون عقوبة') {
                         hasPunishment = true;
@@ -1500,6 +1575,7 @@
             const filterPenalty = document.getElementById('memoFilterPenalty') ? document.getElementById('memoFilterPenalty').value : 'ALL_PUNISHED';
             const filterGroup = document.getElementById('memoFilterGroup') ? document.getElementById('memoFilterGroup').value : 'ALL';
             const filterStudy = document.getElementById('memoFilterStudy') ? document.getElementById('memoFilterStudy').value : 'ALL';
+            const filterWeek = document.getElementById('memoFilterWeek') ? document.getElementById('memoFilterWeek').value : 'ALL';
             const startDate = document.getElementById('memoStartDate') ? document.getElementById('memoStartDate').value : null;
             const endDate = document.getElementById('memoEndDate') ? document.getElementById('memoEndDate').value : null;
 
@@ -1521,7 +1597,7 @@
                 let subjectPenaltyMap = {};
 
                 subjects.forEach(sub => {
-                    let res = calculatePenaltyForSubject(st, sub, startDate, endDate);
+                    let res = calculatePenaltyForSubject(st, sub, startDate, endDate, filterWeek !== 'ALL' ? filterWeek : null);
                     rowObj[sub] = res.penalty;
                     subjectPenaltyMap[sub] = res.penalty;
                     if(res.penalty !== 'بدون عقوبة') hasPunishment = true;
@@ -1938,7 +2014,7 @@
                         <div class="p-2.5 rounded-xl border text-center shadow-sm space-y-1 ${isExcused ? 'bg-amber-50 border-amber-300 text-amber-900' : 'bg-red-50 border-red-300 text-red-900'} flex justify-between items-center">
                             <div class="text-right">
                                 <div class="font-bold text-[11px]">${isExcused ? '🟡 مجاز' : '🔴 غائب'} (${l.subject}) - <span class="font-extrabold">${h}س</span></div>
-                                <div class="text-[9px] font-mono text-slate-700">📅 ${l.date || ''}</div>
+                                <div class="text-[9px] font-mono text-slate-700">📅 ${l.date || ''} ${l.week ? '| ' + l.week : ''}</div>
                             </div>
                             <button onclick="deleteSingleLog('${id}', ${idx})" class="bg-red-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold">حذف الغياب 🗑️</button>
                         </div>
@@ -2011,7 +2087,7 @@
             if(!db.students) db.students = [];
 
             db.students.push({
-                id: String(Date.now()) + Math.floor(Math.random() * 1000),
+                id: generateUniqueStudentId(db.students.length),
                 name: name,
                 stage: stage,
                 group: group,
@@ -2039,11 +2115,25 @@
                     (s.attendanceLog || []).forEach(l => { if(l.week) weeksSet.add(l.week); });
                 });
             }
+            let sortedWeeks = Array.from(weeksSet).sort();
+
             let weekSel = document.getElementById('exportWeek');
-            if(!weekSel) return;
-            let optionsHtml = `<option value="ALL">جميع الأسابيع</option>`;
-            Array.from(weeksSet).sort().forEach(w => optionsHtml += `<option value="${w}">${w}</option>`);
-            weekSel.innerHTML = optionsHtml;
+            if(weekSel) {
+                let prevVal = weekSel.value;
+                let optionsHtml = `<option value="ALL">جميع الأسابيع</option>`;
+                sortedWeeks.forEach(w => optionsHtml += `<option value="${w}">${w}</option>`);
+                weekSel.innerHTML = optionsHtml;
+                if (prevVal && (prevVal === 'ALL' || weeksSet.has(prevVal))) weekSel.value = prevVal;
+            }
+
+            let memoWeekSel = document.getElementById('memoFilterWeek');
+            if(memoWeekSel) {
+                let prevMemoVal = memoWeekSel.value;
+                let optionsHtml = `<option value="ALL">كافة الأسابيع (تراكمي)</option>`;
+                sortedWeeks.forEach(w => optionsHtml += `<option value="${w}">${w}</option>`);
+                memoWeekSel.innerHTML = optionsHtml;
+                if (prevMemoVal && (prevMemoVal === 'ALL' || weeksSet.has(prevMemoVal))) memoWeekSel.value = prevMemoVal;
+            }
         }
 
         function toggleTimeInputs() {
@@ -2143,7 +2233,7 @@
                             let studentName = cell.trim();
                             if(!['اسم الطالب', 'الاسم', 'Name'].includes(studentName)) {
                                 db.students.push({
-                                    id: String(Date.now()) + idx + Math.floor(Math.random() * 100),
+                                    id: generateUniqueStudentId(idx),
                                     name: studentName,
                                     stage: targetStage,
                                     group: targetGroup,
@@ -2169,12 +2259,41 @@
 
         function exportWeeklyAttendanceExcel() {
             if(!db.students || db.students.length === 0) return alert('لا توجد بيانات طلاب للتصدير');
-            let exportRows = db.students.map(s => ({
-                "اسم الطالب": s.name,
-                "المرحلة": s.stage || 'المرحلة الأولى',
-                "الشعبة": s.group,
-                "الدراسة": s.study || 'صباحي'
-            }));
+
+            let selGroup = document.getElementById('exportGroup').value;
+            let selStudy = document.getElementById('exportStudy').value;
+            let selSubject = document.getElementById('exportSubjectFilter').value;
+            let searchQuery = document.getElementById('searchStudentName') ? document.getElementById('searchStudentName').value.trim().toLowerCase() : '';
+            let onlyAbsentChecked = document.getElementById('filterOnlyAbsentInPeriod') ? document.getElementById('filterOnlyAbsentInPeriod').checked : false;
+            let timeFilter = getActiveTimeFilter();
+            let subjects = getDefinedSubjectsList();
+
+            let exportRows = [];
+            db.students.forEach(s => {
+                if (!matchesGroup(s.group, selGroup) || !matchesStudy(s.study, selStudy)) return;
+                if (searchQuery && !(s.name && s.name.toLowerCase().includes(searchQuery))) return;
+
+                let rowObj = {
+                    "اسم الطالب": s.name,
+                    "المرحلة": s.stage || 'المرحلة الأولى',
+                    "الشعبة": s.group,
+                    "الدراسة": s.study || 'صباحي'
+                };
+
+                let totalHoursInFilter = 0;
+                subjects.forEach(sub => {
+                    if (selSubject !== 'ALL' && !checkSubjectMatch(sub, selSubject)) return;
+                    let res = calculatePenaltyForSubject(s, sub, timeFilter.startDate, timeFilter.endDate, timeFilter.week);
+                    rowObj[sub] = `${res.absenceHours} ساعات (${res.percentage}%) - ${res.penalty}`;
+                    totalHoursInFilter += res.absenceHours;
+                });
+
+                if (onlyAbsentChecked && totalHoursInFilter === 0) return;
+                exportRows.push(rowObj);
+            });
+
+            if (exportRows.length === 0) return alert('لا توجد بيانات مطابقة للتصفية الحالية.');
+
             const worksheet = XLSX.utils.json_to_sheet(exportRows);
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, "الغيابات");
