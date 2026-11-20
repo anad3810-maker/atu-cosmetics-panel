@@ -6,6 +6,7 @@
     <title>برنامج إدارة الغيابات - كلية البوليتكنيك نجف</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Cairo:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -13,6 +14,219 @@
         body { font-family: 'Tajawal', sans-serif; background-color: #f1f5f9; user-select: none; }
         .desktop-header { background: linear-gradient(135deg, #0d5c3a, #063d25); }
         [contenteditable="true"]:focus { outline: 2px dashed #0d5c3a; background-color: #fffbeb; border-radius: 4px; padding: 2px; }
+
+        /* 🌟 تأثيرات شاشة تسجيل الدخول المدمجة بنفس الهوية والشعار */
+        .login-bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: #e7ebf0;
+            box-shadow: 15px 15px 30px rgba(163, 177, 198, 0.55), -15px -15px 30px rgba(255, 255, 255, 0.9);
+            pointer-events: none;
+            animation: loginFloating 6s ease-in-out infinite;
+        }
+        .login-bg1 { width: 210px; height: 210px; top: 7%; left: 8%; }
+        .login-bg2 { width: 150px; height: 150px; right: 8%; bottom: 8%; animation-delay: 1.5s; }
+        .login-bg3 { width: 70px; height: 70px; right: 22%; top: 18%; animation-delay: 3s; }
+
+        @keyframes loginFloating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-18px); }
+        }
+
+        .neo-login-card {
+            position: relative;
+            z-index: 10;
+            background: #e7ebf0;
+            box-shadow: 20px 20px 40px rgba(163, 177, 198, 0.7), -20px -20px 40px rgba(255, 255, 255, 0.95);
+        }
+
+        .neo-logo-ring {
+            width: 112px;
+            height: 112px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: #e7ebf0;
+            box-shadow: 9px 9px 18px rgba(163, 177, 198, 0.65), -9px -9px 18px rgba(255, 255, 255, 0.95);
+            transition: 0.4s ease;
+        }
+        .neo-logo-ring:hover {
+            transform: translateY(-5px) rotate(6deg);
+        }
+
+        .neo-input-group {
+            position: relative;
+            width: 100%;
+            height: 56px;
+            margin-bottom: 16px;
+        }
+
+        .neo-electric-border {
+            position: absolute;
+            inset: -2px;
+            border-radius: 18px;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .neo-electric-border::before {
+            content: "";
+            position: absolute;
+            width: 170%;
+            height: 170%;
+            left: -35%;
+            top: -35%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                transparent 30deg,
+                #fbbf24 45deg,
+                #10b981 65deg,
+                #0d5c3a 85deg,
+                transparent 105deg,
+                transparent 360deg
+            );
+            animation: neoElectricRotate 1.2s linear infinite;
+        }
+        .neo-electric-border::after {
+            content: "";
+            position: absolute;
+            inset: 2px;
+            border-radius: 16px;
+            background: #e7ebf0;
+        }
+        .neo-electric-glow {
+            position: absolute;
+            inset: -4px;
+            border-radius: 20px;
+            pointer-events: none;
+            opacity: 0;
+            filter: blur(7px);
+            background: linear-gradient(45deg, #10b981, #fbbf24);
+        }
+        .neo-input-group:focus-within .neo-electric-border { opacity: 1; }
+        .neo-input-group:focus-within .neo-electric-glow {
+            opacity: 0.45;
+            animation: neoElectricRotate 1.2s linear infinite;
+        }
+        @keyframes neoElectricRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .neo-input-group input {
+            position: absolute;
+            inset: 2px;
+            width: calc(100% - 4px);
+            height: 52px;
+            border: none;
+            outline: none;
+            border-radius: 15px;
+            background: #e7ebf0;
+            color: #1e293b;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 0 16px 0 44px;
+            z-index: 20;
+            box-shadow: inset 6px 6px 12px rgba(163, 177, 198, 0.55), inset -6px -6px 12px rgba(255, 255, 255, 0.95);
+            transition: box-shadow 0.25s ease;
+        }
+        .neo-input-group input:focus {
+            box-shadow: inset 3px 3px 7px rgba(163, 177, 198, 0.55), inset -3px -3px 7px rgba(255, 255, 255, 0.95);
+        }
+        .neo-input-group label {
+            position: absolute;
+            right: 16px;
+            top: 18px;
+            z-index: 30;
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 700;
+            pointer-events: none;
+            transition: all 0.25s ease;
+        }
+        .neo-input-group input:focus + label,
+        .neo-input-group input:not(:placeholder-shown) + label {
+            top: -9px;
+            right: 14px;
+            padding: 1px 8px;
+            border-radius: 7px;
+            background: #e7ebf0;
+            color: #0d5c3a;
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 15px;
+            white-space: nowrap;
+            box-shadow: 2px 2px 5px rgba(163, 177, 198, 0.5);
+        }
+
+        .neo-pass-toggle {
+            position: absolute;
+            left: 12px;
+            top: 14px;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            background: transparent;
+            color: #64748b;
+            cursor: pointer;
+            z-index: 40;
+            font-size: 16px;
+            transition: 0.2s ease;
+        }
+        .neo-pass-toggle:hover {
+            color: #0d5c3a;
+            transform: scale(1.12);
+        }
+
+        .neo-main-btn {
+            position: relative;
+            isolation: isolate;
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: 16px;
+            background: #e7ebf0;
+            color: #0d5c3a;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 8px 8px 16px rgba(163, 177, 198, 0.65), -8px -8px 16px rgba(255, 255, 255, 0.95);
+            transition: 0.3s ease;
+        }
+        .neo-main-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(110deg, #063d25, #0d5c3a, #15803d, #0d5c3a);
+            background-size: 200% 100%;
+            transform: translateY(100%);
+            transition: transform 0.35s ease;
+            z-index: -1;
+        }
+        .neo-main-btn:hover::before {
+            transform: translateY(0);
+            animation: neoBtnMove 1.8s linear infinite;
+        }
+        @keyframes neoBtnMove {
+            from { background-position: 0 50%; }
+            to { background-position: 200% 50%; }
+        }
+        .neo-main-btn:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(13, 92, 58, 0.35);
+        }
+        .neo-main-btn:active {
+            transform: scale(0.97);
+        }
 
         #splashScreen {
             position: fixed;
@@ -134,27 +348,42 @@
         <img src="splash.png" onerror="this.onerror=null; this.src='https://i.imgur.com/iyX6S1h.png';" class="splash-logo" alt="شعار البداية">
     </div>
 
-    <!-- 🔐 شاشة تسجيل الدخول للوحة الإشراف -->
-    <div id="adminLoginOverlay" class="fixed inset-0 bg-slate-900/95 backdrop-blur-md flex justify-center items-center z-50 p-4">
-        <div class="bg-white w-full max-w-md rounded-3xl p-7 shadow-2xl border-t-8 border-emerald-800 space-y-5">
-            <div class="text-center space-y-2">
-                <img src="splash.png" onerror="this.onerror=null; this.src='https://i.imgur.com/iyX6S1h.png';" class="h-24 w-24 object-cover rounded-full mx-auto border-4 border-amber-400 shadow-md" alt="شعار الكلية">
+    <!-- 🔐 شاشة تسجيل الدخول للوحة الإشراف (مدمجة مع الحركات والإطار الكهربائي وزر العين بنفس الشعار) -->
+    <div id="adminLoginOverlay" class="fixed inset-0 bg-[#e7ebf0] flex justify-center items-center z-50 p-4 overflow-hidden">
+        <div class="login-bg-circle login-bg1"></div>
+        <div class="login-bg-circle login-bg2"></div>
+        <div class="login-bg-circle login-bg3"></div>
+
+        <div class="neo-login-card w-full max-w-md rounded-[35px] p-7 border border-white/80 space-y-5">
+            <div class="text-center space-y-2.5">
+                <div class="neo-logo-ring">
+                    <img src="splash.png" onerror="this.onerror=null; this.src='https://i.imgur.com/iyX6S1h.png';" class="h-24 w-24 object-cover rounded-full border-2 border-amber-400 shadow-inner" alt="شعار الكلية">
+                </div>
                 <h2 class="text-base font-extrabold text-emerald-950">لوحة الإشراف وإدارة الغيابات</h2>
-                <p class="text-xs text-slate-500 font-bold">كلية البوليتكنيك - النجف | دخول المخولين فقط</p>
+                <p class="text-xs text-slate-600 font-bold">كلية البوليتكنيك - النجف | دخول المخولين فقط</p>
             </div>
 
-            <div class="space-y-3 text-xs">
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">البريد الإلكتروني للإشراف:</label>
-                    <input type="email" id="adminLoginEmail" placeholder="example@atunajaf.com" class="w-full p-3 border rounded-xl bg-slate-50 focus:bg-white font-bold text-left" dir="ltr">
+            <div class="pt-1">
+                <div class="neo-input-group">
+                    <div class="neo-electric-glow"></div>
+                    <div class="neo-electric-border"></div>
+                    <input type="email" id="adminLoginEmail" placeholder=" " dir="ltr" class="text-left">
+                    <label for="adminLoginEmail">البريد الإلكتروني للإشراف (example@atunajaf.com)</label>
                 </div>
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">كلمة المرور:</label>
-                    <input type="password" id="adminLoginPass" placeholder="••••••••" onkeypress="if(event.key === 'Enter') verifyAdminLogin()" class="w-full p-3 border rounded-xl bg-slate-50 focus:bg-white font-bold text-left" dir="ltr">
+
+                <div class="neo-input-group">
+                    <div class="neo-electric-glow"></div>
+                    <div class="neo-electric-border"></div>
+                    <input type="password" id="adminLoginPass" placeholder=" " dir="ltr" class="text-left" onkeypress="if(event.key === 'Enter') verifyAdminLogin()">
+                    <label for="adminLoginPass">كلمة المرور</label>
+                    <button type="button" class="neo-pass-toggle" onclick="toggleAdminPassVisibility()" title="إظهار / إخفاء كلمة المرور">
+                        <i id="adminPassEyeIcon" class="fa-solid fa-eye"></i>
+                    </button>
                 </div>
-                <div id="adminLoginError" class="hidden text-center text-red-600 font-bold bg-red-50 p-2 rounded-lg border border-red-200"></div>
-                <button onclick="verifyAdminLogin()" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white py-3 rounded-xl font-extrabold shadow-lg transition text-sm">
-                    🔓 تسجيل الدخول إلى النظام
+
+                <div id="adminLoginError" class="hidden text-center text-red-600 font-bold bg-red-50 p-2 rounded-xl border border-red-200 text-xs mb-3"></div>
+                <button type="button" onclick="verifyAdminLogin()" class="neo-main-btn">
+                    <i class="fa-solid fa-lock-open ml-1.5"></i> تسجيل الدخول إلى النظام
                 </button>
             </div>
         </div>
@@ -174,11 +403,17 @@
             <div class="flex items-center gap-2 flex-wrap">
                 <span id="totalStudentsCounterBadge" class="bg-emerald-950/80 text-emerald-200 px-2.5 py-1 rounded-lg text-[11px] font-extrabold border border-emerald-400/40">👥 الطلاب: 0</span>
                 <span id="loggedAdminBadge" class="bg-white/15 text-amber-200 px-2.5 py-1 rounded-lg text-[11px] font-bold border border-white/20"></span>
-                <div class="bg-white/10 p-1.5 rounded-lg border border-white/20 flex items-center gap-1.5 text-xs">
-                    <span class="font-bold text-[11px]">الأسبوع الحالي:</span>
+
+                <!-- 🔄 التحكم التلقائي واليدوي بالأسبوع الدراسي وفتح المحاضرات -->
+                <div class="bg-white/10 p-1.5 rounded-lg border border-white/20 flex items-center gap-1.5 text-xs flex-wrap">
+                    <span class="font-bold text-[11px]">الأسبوع:</span>
                     <input type="number" id="academicWeekInput" min="1" max="30" value="1" class="w-12 p-1 text-center font-bold text-slate-900 rounded bg-amber-300 text-xs">
-                    <button onclick="saveCurrentAcademicWeek()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 px-2 py-1 rounded font-bold text-[10px] shadow">تثبيت</button>
+                    <button onclick="saveCurrentAcademicWeek()" title="تثبيت رقم الأسبوع وفتح محاضراته للأساتذة" class="bg-amber-500 hover:bg-amber-600 text-slate-900 px-2 py-1 rounded font-bold text-[10px] shadow">تثبيت</button>
+                    <button id="toggleAutoWeekBtn" onclick="toggleAutoWeekSystem()" title="التبديل بين التحديث التلقائي الأسبوعي (الأحد-الخميس) أو إيقاف المحاضرات مؤقتاً" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 px-2.5 py-1 rounded font-extrabold text-[10px] shadow transition">
+                        🟢 تلقائي (نشط)
+                    </button>
                 </div>
+
                 <button onclick="downloadFullBackupJSON()" title="تحميل نسخة احتياطية كاملة على جهازك" class="bg-amber-400 hover:bg-amber-500 text-slate-950 px-2.5 py-1.5 rounded-lg font-extrabold text-xs shadow">💾 نسخة احتياطية</button>
                 <label id="restoreBackupLabel" title="استعادة البيانات من ملف نسخة احتياطية" class="hidden bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-xs shadow cursor-pointer">
                     📂 استعادة نسخة
@@ -766,6 +1001,21 @@
         let isInitialLoadDone = false;
         let isSavingNow = false;
 
+        function toggleAdminPassVisibility() {
+            const input = document.getElementById('adminLoginPass');
+            const icon = document.getElementById('adminPassEyeIcon');
+            if (!input || !icon) return;
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
             const hideSplash = () => {
                 const splash = document.getElementById('splashScreen');
@@ -782,16 +1032,101 @@
         firebase.initializeApp(firebaseConfig);
         const dbRef = firebase.database().ref('atu_system_data');
 
-        let db = { teachers: {}, students: [], memoTemplates: {}, holidays: {}, currentAcademicWeek: 1, subjectConfigs: {}, admins: {} };
+        let db = {
+            teachers: {},
+            students: [],
+            memoTemplates: {},
+            holidays: {},
+            currentAcademicWeek: 1,
+            autoWeekEnabled: true,
+            weekAnchorSunday: null,
+            subjectConfigs: {},
+            admins: {}
+        };
         let activeStudentId = null;
         let currentAuditStage = 'المرحلة الأولى';
         let copiedStyleStore = null;
+
+        // 📅 حساب بداية الأسبوع الفعلي (الأحد -> الخميس، والجمعة/السبت بداية أسبوع جديد)
+        function getAcademicSundayTimestamp(dateObj = new Date()) {
+            const d = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+            const day = d.getDay();
+            if (day === 5) {
+                d.setDate(d.getDate() + 2);
+            } else if (day === 6) {
+                d.setDate(d.getDate() + 1);
+            } else {
+                d.setDate(d.getDate() - day);
+            }
+            return d.getTime();
+        }
+
+        function getEffectiveAcademicWeekNumber() {
+            let baseWeek = parseInt(db.currentAcademicWeek) || 1;
+            const isAuto = db.autoWeekEnabled !== false;
+            if (!isAuto || !db.weekAnchorSunday) {
+                return baseWeek;
+            }
+            const currentSun = getAcademicSundayTimestamp(new Date());
+            const anchorSun = Number(db.weekAnchorSunday);
+            const diffWeeks = Math.floor((currentSun - anchorSun) / (7 * 24 * 60 * 60 * 1000));
+            return Math.max(1, baseWeek + (diffWeeks > 0 ? diffWeeks : 0));
+        }
+
+        function updateAutoWeekButtonUI() {
+            const btn = document.getElementById('toggleAutoWeekBtn');
+            if (!btn) return;
+            const isAuto = db.autoWeekEnabled !== false;
+            if (isAuto) {
+                btn.innerText = "🟢 تلقائي (نشط)";
+                btn.className = "bg-emerald-500 hover:bg-emerald-600 text-slate-950 px-2.5 py-1 rounded font-extrabold text-[10px] shadow transition";
+            } else {
+                btn.innerText = "🔴 متوقف (إيقاف يدوي)";
+                btn.className = "bg-red-500 hover:bg-red-600 text-white px-2.5 py-1 rounded font-extrabold text-[10px] shadow transition";
+            }
+        }
+
+        function toggleAutoWeekSystem() {
+            if (!isInitialLoadDone) {
+                alert("⚠️ انتظر اكتمال تحميل البيانات من السحابة أولاً.");
+                return;
+            }
+            const currentlyAuto = db.autoWeekEnabled !== false;
+            const nextState = !currentlyAuto;
+            const effectiveWeek = getEffectiveAcademicWeekNumber();
+
+            db.autoWeekEnabled = nextState;
+            db.currentAcademicWeek = effectiveWeek;
+            if (nextState) {
+                db.weekAnchorSunday = getAcademicSundayTimestamp(new Date());
+            }
+
+            isSavingNow = true;
+            document.getElementById('statusText').innerText = "⏳ جاري تحديث حالة النظام...";
+            dbRef.update({
+                autoWeekEnabled: db.autoWeekEnabled,
+                currentAcademicWeek: db.currentAcademicWeek,
+                weekAnchorSunday: db.weekAnchorSunday
+            }).then(() => {
+                isSavingNow = false;
+                document.getElementById('academicWeekInput').value = effectiveWeek;
+                updateAutoWeekButtonUI();
+                document.getElementById('statusText').innerText = `✅ تم التحديث (${db.students.length} طالب)`;
+                if (nextState) {
+                    alert(`🟢 تم تفعيل الوضع التلقائي للأسابيع (الأسبوع الحالي: ${effectiveWeek}). ستُفتح المحاضرات تلقائياً للأساتذة مع نهاية كل أسبوع (الجمعة/السبت).`);
+                } else {
+                    alert(`🔴 تم إيقاف استقبال المحاضرات والتقدم التلقائي مؤقتاً.`);
+                }
+            }).catch((err) => {
+                isSavingNow = false;
+                alert("❌ فشل التحديث: " + err.message);
+            });
+        }
 
         function generateUniqueStudentId(index = 0) {
             return `st_${Date.now()}_${index}_${Math.floor(100000 + Math.random() * 900000)}`;
         }
 
-        // 🛡️ فحص وإصلاح أي معرّف طالب مكرر تلقائياً لمنع تداخل بيانات الطلاب
         function ensureUniqueStudentIds(studentsList) {
             const seen = new Set();
             let hasDuplicates = false;
@@ -921,6 +1256,8 @@
                         db.memoTemplates = parsedData.memoTemplates || {};
                         db.holidays = parsedData.holidays || {};
                         db.currentAcademicWeek = parsedData.currentAcademicWeek || 1;
+                        db.autoWeekEnabled = parsedData.autoWeekEnabled !== undefined ? parsedData.autoWeekEnabled : true;
+                        db.weekAnchorSunday = parsedData.weekAnchorSunday || getAcademicSundayTimestamp(new Date());
                         db.subjectConfigs = parsedData.subjectConfigs || {};
                         db.admins = parsedData.admins || {};
 
@@ -1080,20 +1417,33 @@
                 db.memoTemplates = data.memoTemplates || {};
                 db.holidays = data.holidays || {};
                 db.currentAcademicWeek = data.currentAcademicWeek || 1;
+                db.autoWeekEnabled = data.autoWeekEnabled !== undefined ? data.autoWeekEnabled : true;
+                db.weekAnchorSunday = data.weekAnchorSunday || null;
                 db.subjectConfigs = data.subjectConfigs || {};
                 db.admins = data.admins || {};
 
                 isInitialLoadDone = true;
 
-                // إذا تم اكتشاف معرّفات مكررة، نحفظ التصحيح في السحابة فوراً بصمت
+                // تهيئة نقطة البداية الزمنية أول مرة فقط دون المساس بالبيانات
+                let silentMetaUpdates = {};
+                if (!db.weekAnchorSunday && db.autoWeekEnabled !== false) {
+                    db.weekAnchorSunday = getAcademicSundayTimestamp(new Date());
+                    silentMetaUpdates.weekAnchorSunday = db.weekAnchorSunday;
+                    silentMetaUpdates.autoWeekEnabled = true;
+                }
                 if (hasDuplicates) {
+                    silentMetaUpdates.students = db.students;
+                }
+                if (Object.keys(silentMetaUpdates).length > 0) {
                     isSavingNow = true;
-                    dbRef.child('students').set(db.students).finally(() => {
+                    dbRef.update(silentMetaUpdates).finally(() => {
                         isSavingNow = false;
                     });
                 }
 
-                document.getElementById('academicWeekInput').value = db.currentAcademicWeek;
+                const effectiveWeek = getEffectiveAcademicWeekNumber();
+                document.getElementById('academicWeekInput').value = effectiveWeek;
+                updateAutoWeekButtonUI();
                 document.getElementById('totalStudentsCounterBadge').innerText = `👥 الطلاب: ${db.students.length}`;
                 document.getElementById('statusText').innerText = `✅ متصل بالسحابة (${db.students.length} طالب | ${Object.keys(db.teachers).length} أستاذ)`;
             } else {
@@ -1170,6 +1520,8 @@
                 memoTemplates: db.memoTemplates || {},
                 holidays: db.holidays || {},
                 currentAcademicWeek: db.currentAcademicWeek || 1,
+                autoWeekEnabled: db.autoWeekEnabled !== undefined ? db.autoWeekEnabled : true,
+                weekAnchorSunday: db.weekAnchorSunday || getAcademicSundayTimestamp(new Date()),
                 subjectConfigs: db.subjectConfigs || {},
                 admins: db.admins || {}
             }).then(() => {
@@ -1183,10 +1535,27 @@
         }
 
         function saveCurrentAcademicWeek() {
+            if (!isInitialLoadDone) {
+                alert("⚠️ انتظر اكتمال تحميل البيانات من السحابة أولاً.");
+                return;
+            }
             let week = parseInt(document.getElementById('academicWeekInput').value) || 1;
             db.currentAcademicWeek = week;
-            saveToCloud('currentAcademicWeek');
-            alert(`✅ تم تثبيت الأسبوع الدراسي رقم (${week}) بنجاح!`);
+            db.weekAnchorSunday = getAcademicSundayTimestamp(new Date());
+
+            isSavingNow = true;
+            document.getElementById('statusText').innerText = "⏳ جاري تثبيت الأسبوع وفتح المحاضرات...";
+            dbRef.update({
+                currentAcademicWeek: db.currentAcademicWeek,
+                weekAnchorSunday: db.weekAnchorSunday
+            }).then(() => {
+                isSavingNow = false;
+                document.getElementById('statusText').innerText = `✅ تم تثبيت الأسبوع (${week})`;
+                alert(`✅ تم تثبيت الأسبوع الدراسي رقم (${week}) بنجاح وفتح جميع محاضرات هذا الأسبوع للأساتذة!`);
+            }).catch((err) => {
+                isSavingNow = false;
+                alert("❌ فشل التثبيت: " + err.message);
+            });
         }
 
         function switchTab(t) {
@@ -1312,7 +1681,6 @@
             student.absenceHours = total;
         }
 
-        // ⏱️ استخراج معايير الفلترة الزمنية للتبويب الأول
         function getActiveTimeFilter() {
             const mode = document.getElementById('exportTimeMode') ? document.getElementById('exportTimeMode').value : 'CUMULATIVE';
             if (mode === 'WEEK') {
