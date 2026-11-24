@@ -15,7 +15,6 @@
         .desktop-header { background: linear-gradient(135deg, #0d5c3a, #063d25); }
         [contenteditable="true"]:focus { outline: 2px dashed #0d5c3a; background-color: #fffbeb; border-radius: 4px; padding: 2px; }
 
-        /* 🌟 تأثيرات شاشة تسجيل الدخول المدمجة بنفس الهوية والشعار */
         .login-bg-circle {
             position: absolute;
             border-radius: 50%;
@@ -52,9 +51,7 @@
             box-shadow: 9px 9px 18px rgba(163, 177, 198, 0.65), -9px -9px 18px rgba(255, 255, 255, 0.95);
             transition: 0.4s ease;
         }
-        .neo-logo-ring:hover {
-            transform: translateY(-5px) rotate(6deg);
-        }
+        .neo-logo-ring:hover { transform: translateY(-5px) rotate(6deg); }
 
         .neo-input-group {
             position: relative;
@@ -79,16 +76,7 @@
             height: 170%;
             left: -35%;
             top: -35%;
-            background: conic-gradient(
-                from 0deg,
-                transparent 0deg,
-                transparent 30deg,
-                #fbbf24 45deg,
-                #10b981 65deg,
-                #0d5c3a 85deg,
-                transparent 105deg,
-                transparent 360deg
-            );
+            background: conic-gradient(from 0deg, transparent 0deg, transparent 30deg, #fbbf24 45deg, #10b981 65deg, #0d5c3a 85deg, transparent 105deg, transparent 360deg);
             animation: neoElectricRotate 1.2s linear infinite;
         }
         .neo-electric-border::after {
@@ -108,10 +96,7 @@
             background: linear-gradient(45deg, #10b981, #fbbf24);
         }
         .neo-input-group:focus-within .neo-electric-border { opacity: 1; }
-        .neo-input-group:focus-within .neo-electric-glow {
-            opacity: 0.45;
-            animation: neoElectricRotate 1.2s linear infinite;
-        }
+        .neo-input-group:focus-within .neo-electric-glow { opacity: 0.45; animation: neoElectricRotate 1.2s linear infinite; }
         @keyframes neoElectricRotate {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
@@ -134,9 +119,7 @@
             box-shadow: inset 6px 6px 12px rgba(163, 177, 198, 0.55), inset -6px -6px 12px rgba(255, 255, 255, 0.95);
             transition: box-shadow 0.25s ease;
         }
-        .neo-input-group input:focus {
-            box-shadow: inset 3px 3px 7px rgba(163, 177, 198, 0.55), inset -3px -3px 7px rgba(255, 255, 255, 0.95);
-        }
+        .neo-input-group input:focus { box-shadow: inset 3px 3px 7px rgba(163, 177, 198, 0.55), inset -3px -3px 7px rgba(255, 255, 255, 0.95); }
         .neo-input-group label {
             position: absolute;
             right: 16px;
@@ -180,10 +163,7 @@
             font-size: 16px;
             transition: 0.2s ease;
         }
-        .neo-pass-toggle:hover {
-            color: #0d5c3a;
-            transform: scale(1.12);
-        }
+        .neo-pass-toggle:hover { color: #0d5c3a; transform: scale(1.12); }
 
         .neo-main-btn {
             position: relative;
@@ -211,22 +191,13 @@
             transition: transform 0.35s ease;
             z-index: -1;
         }
-        .neo-main-btn:hover::before {
-            transform: translateY(0);
-            animation: neoBtnMove 1.8s linear infinite;
-        }
+        .neo-main-btn:hover::before { transform: translateY(0); animation: neoBtnMove 1.8s linear infinite; }
         @keyframes neoBtnMove {
             from { background-position: 0 50%; }
             to { background-position: 200% 50%; }
         }
-        .neo-main-btn:hover {
-            color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(13, 92, 58, 0.35);
-        }
-        .neo-main-btn:active {
-            transform: scale(0.97);
-        }
+        .neo-main-btn:hover { color: #ffffff; transform: translateY(-2px); box-shadow: 0 10px 24px rgba(13, 92, 58, 0.35); }
+        .neo-main-btn:active { transform: scale(0.97); }
 
         #splashScreen {
             position: fixed;
@@ -248,10 +219,7 @@
             background-color: #030b08;
         }
 
-        .fade-out-screen {
-            opacity: 0;
-            visibility: hidden;
-        }
+        .fade-out-screen { opacity: 0; visibility: hidden; }
 
         .admin-table {
             width: 100% !important;
@@ -285,59 +253,18 @@
         }
 
         @media print {
-            @page {
-                size: A4 portrait;
-                margin: 0 !important;
+            @page { size: A4 portrait; margin: 0 !important; }
+            html, body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; width: 100% !important; height: auto !important; }
+            body * { visibility: hidden; }
+            .print-active-area, .print-active-area * { visibility: visible !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .print-active-area {
+                position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; height: auto !important;
+                border: none !important; background: #fff !important; padding: 6mm 6mm !important; margin: 0 !important;
+                box-shadow: none !important; box-sizing: border-box !important; display: block !important;
             }
-
-            html, body {
-                background: #ffffff !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                width: 100% !important;
-                height: auto !important;
-            }
-
-            body * { 
-                visibility: hidden; 
-            }
-
-            .print-active-area, .print-active-area * { 
-                visibility: visible !important; 
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-
-            .print-active-area { 
-                position: absolute !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: 100% !important; 
-                height: auto !important;
-                border: none !important; 
-                background: #fff !important; 
-                padding: 6mm 6mm !important;
-                margin: 0 !important;
-                box-shadow: none !important; 
-                box-sizing: border-box !important;
-                display: block !important;
-            }
-
-            .no-print { 
-                display: none !important; 
-            }
-
-            tr {
-                page-break-inside: avoid !important;
-            }
-
-            .fixed-signature-box {
-                margin-top: 20px !important;
-                width: 100% !important;
-                display: flex !important;
-                justify-content: flex-end !important;
-                page-break-inside: avoid !important;
-            }
+            .no-print { display: none !important; }
+            tr { page-break-inside: avoid !important; }
+            .fixed-signature-box { margin-top: 20px !important; width: 100% !important; display: flex !important; justify-content: flex-end !important; page-break-inside: avoid !important; }
         }
     </style>
 </head>
@@ -348,7 +275,7 @@
         <img src="splash.png" onerror="this.onerror=null; this.src='https://i.imgur.com/iyX6S1h.png';" class="splash-logo" alt="شعار البداية">
     </div>
 
-    <!-- 🔐 شاشة تسجيل الدخول للوحة الإشراف (مدمجة مع الحركات والإطار الكهربائي وزر العين بنفس الشعار) -->
+    <!-- 🔐 شاشة تسجيل الدخول للوحة الإشراف -->
     <div id="adminLoginOverlay" class="fixed inset-0 bg-[#e7ebf0] flex justify-center items-center z-50 p-4 overflow-hidden">
         <div class="login-bg-circle login-bg1"></div>
         <div class="login-bg-circle login-bg2"></div>
@@ -404,7 +331,6 @@
                 <span id="totalStudentsCounterBadge" class="bg-emerald-950/80 text-emerald-200 px-2.5 py-1 rounded-lg text-[11px] font-extrabold border border-emerald-400/40">👥 الطلاب: 0</span>
                 <span id="loggedAdminBadge" class="bg-white/15 text-amber-200 px-2.5 py-1 rounded-lg text-[11px] font-bold border border-white/20"></span>
 
-                <!-- 🔄 التحكم التلقائي واليدوي بالأسبوع الدراسي وفتح المحاضرات -->
                 <div class="bg-white/10 p-1.5 rounded-lg border border-white/20 flex items-center gap-1.5 text-xs flex-wrap">
                     <span class="font-bold text-[11px]">الأسبوع:</span>
                     <input type="number" id="academicWeekInput" min="1" max="30" value="1" class="w-12 p-1 text-center font-bold text-slate-900 rounded bg-amber-300 text-xs">
@@ -447,10 +373,18 @@
                         </label>
                     </div>
                     
-                    <div class="grid grid-cols-1 sm:grid-cols-6 gap-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-7 gap-3">
                         <div>
                             <label class="block font-bold mb-1 text-slate-700">🔍 البحث باسم الطالب:</label>
                             <input type="text" id="searchStudentName" oninput="renderUI()" placeholder="اكتب اسم الطالب..." class="w-full p-2 border rounded-lg bg-white font-bold text-emerald-900">
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-1 text-emerald-900">🎓 المرحلة الدراسية:</label>
+                            <select id="exportStage" onchange="updateSubjectFilterDropdown(); renderUI();" class="w-full p-2 border rounded-lg bg-white font-bold text-emerald-900">
+                                <option value="ALL">جميع المراحل (الأولى + الثانية)</option>
+                                <option value="المرحلة الأولى">المرحلة الأولى فقط</option>
+                                <option value="المرحلة الثانية">المرحلة الثانية فقط</option>
+                            </select>
                         </div>
                         <div>
                             <label class="block font-bold mb-1 text-slate-700">اختر الشعبة:</label>
@@ -560,6 +494,13 @@
                         <div><label class="block font-bold mb-1 text-slate-700">اليوم:</label><select id="tDay" class="w-full p-2 border rounded bg-white font-bold"><option>الأحد</option><option>الإثنين</option><option>الثلاثاء</option><option>الأربعاء</option><option>الخميس</option></select></div>
                         <div><label class="block font-bold mb-1 text-slate-700">المادة:</label><input type="text" id="tSub" placeholder="اسم المادة" class="w-full p-2 border rounded bg-white font-bold"></div>
                         <div>
+                            <label class="block font-bold mb-1 text-emerald-900">المرحلة:</label>
+                            <select id="tLecStage" class="w-full p-2 border rounded bg-white font-bold text-emerald-900 shadow-sm">
+                                <option value="المرحلة الأولى">المرحلة الأولى</option>
+                                <option value="المرحلة الثانية">المرحلة الثانية</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block font-bold mb-1 text-slate-700">الشعبة:</label>
                             <select id="tGrp" class="w-full p-2 border rounded bg-white font-bold">
                                 <optgroup label="شعبة مزدوجة (مدمجة)"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></optgroup>
@@ -574,26 +515,40 @@
                     </div>
                 </div>
 
-                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 space-y-3">
-                    <h3 class="font-bold text-amber-900">🔓 التحكم بفتح وغلق المحاضرات المقفلة للأساتذة:</h3>
-                    <div id="lockedLecturesContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+                <!-- 🔓 قسم المحاضرات المقفلة مجمّع حسب الأستاذ والأسبوع -->
+                <div class="bg-amber-50 p-4 rounded-xl border border-amber-300 space-y-3">
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-amber-200 pb-2">
+                        <h3 class="font-extrabold text-amber-950">🔓 التحكم بفتح وغلق المحاضرات المقفلة (مرتبة حسب الأساتذة والأسابيع):</h3>
+                        <button id="unlockAllSystemLecturesBtn" onclick="unlockAllSystemLectures()" class="hidden bg-emerald-800 hover:bg-emerald-900 text-white px-3.5 py-1.5 rounded-lg text-xs font-extrabold shadow">
+                            🔓 فتح جميع المحاضرات المقفلة لكل الأساتذة
+                        </button>
+                    </div>
+                    <div id="lockedLecturesContainer" class="space-y-3"></div>
                 </div>
 
-                <div class="border rounded-xl overflow-hidden bg-white"><table class="w-full text-right"><thead class="bg-slate-100 font-bold"><tr><th class="p-2.5">اسم الأستاذ</th><th class="p-2.5">الهاتف والإيميل</th><th class="p-2.5">الحصص والمواد والدراسة</th><th class="p-2.5">إجراءات والتعديل</th></tr></thead><tbody id="tchTable" class="divide-y"></tbody></table></div>
+                <div class="border rounded-xl overflow-hidden bg-white"><table class="w-full text-right"><thead class="bg-slate-100 font-bold"><tr><th class="p-2.5">اسم الأستاذ</th><th class="p-2.5">الهاتف والإيميل</th><th class="p-2.5">الحصص والمواد والمرحلة والدراسة</th><th class="p-2.5">إجراءات والتعديل</th></tr></thead><tbody id="tchTable" class="divide-y"></tbody></table></div>
             </div>
 
             <!-- TAB 3: SUBJECT CONFIG -->
             <div id="tabSubConfig" class="space-y-4 hidden text-xs">
                 <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200 space-y-3">
-                    <h3 class="font-bold text-emerald-900 text-sm">⚙️ إدخال إجمالي ساعات المادة للكورس واحتساب نسب العقوبات:</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
-                        <div><label class="block font-bold mb-1">اسم المادة الدراسيّة:</label><input type="text" id="confSubName" class="w-full p-2 border rounded bg-white font-bold"></div>
+                    <h3 class="font-bold text-emerald-900 text-sm">⚙️ إدخال إجمالي ساعات المادة للكورس واحتساب نسب العقوبات (مفصولة حسب المرحلة):</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
+                        <div>
+                            <label class="block font-bold mb-1 text-emerald-900">المرحلة الدراسية:</label>
+                            <select id="confSubStage" class="w-full p-2 border rounded bg-white font-bold text-emerald-900">
+                                <option value="المرحلة الأولى">المرحلة الأولى</option>
+                                <option value="المرحلة الثانية">المرحلة الثانية</option>
+                                <option value="ALL">مشتركة للمرحلتين</option>
+                            </select>
+                        </div>
+                        <div><label class="block font-bold mb-1">اسم المادة الدراسية:</label><input type="text" id="confSubName" class="w-full p-2 border rounded bg-white font-bold"></div>
                         <div><label class="block font-bold mb-1">إجمالي ساعات النظري:</label><input type="number" id="confSubTheory" min="0" value="30" class="w-full p-2 border rounded text-center font-bold"></div>
                         <div><label class="block font-bold mb-1">إجمالي ساعات العملي:</label><input type="number" id="confSubPractical" min="0" value="30" class="w-full p-2 border rounded text-center font-bold"></div>
                         <div class="flex items-end"><button onclick="saveSubjectConfig()" class="w-full bg-emerald-800 text-white p-2.5 rounded-lg font-bold shadow">💾 حفظ المادة وحساب النسب</button></div>
                     </div>
                 </div>
-                <div class="border rounded-xl overflow-hidden bg-white"><table class="w-full text-right"><thead class="bg-slate-100 font-bold"><tr><th class="p-2.5">المادة الدراسية</th><th class="p-2.5">ساعات الكورس</th><th class="p-2.5">المجموع الكلي</th><th class="p-2.5">تنبيه (3%)</th><th class="p-2.5">إنذار أولي (6%)</th><th class="p-2.5">إنذار نهائي (9%)</th><th class="p-2.5">فصل (>9%)</th><th class="p-2.5">إجراءات</th></tr></thead><tbody id="subConfigTable" class="divide-y"></tbody></table></div>
+                <div class="border rounded-xl overflow-hidden bg-white"><table class="w-full text-right"><thead class="bg-slate-100 font-bold"><tr><th class="p-2.5">المرحلة</th><th class="p-2.5">المادة الدراسية</th><th class="p-2.5">ساعات الكورس</th><th class="p-2.5">المجموع الكلي</th><th class="p-2.5">تنبيه (3%)</th><th class="p-2.5">إنذار أولي (6%)</th><th class="p-2.5">إنذار نهائي (9%)</th><th class="p-2.5">فصل (>9%)</th><th class="p-2.5">إجراءات</th></tr></thead><tbody id="subConfigTable" class="divide-y"></tbody></table></div>
             </div>
 
             <!-- TAB 4: HOLIDAYS -->
@@ -614,18 +569,21 @@
             <div id="tabGrp" class="space-y-4 hidden text-xs">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200 space-y-3">
-                        <h3 class="font-bold text-emerald-900">📊 رفع قوام الطلاب عبر إكسل:</h3>
+                        <h3 class="font-bold text-emerald-900">📊 رفع قوام الطلاب عبر إكسل (اختر المرحلة بدقة قبل الرفع):</h3>
                         <div class="grid grid-cols-3 gap-2">
-                            <select id="exStage" class="p-2 border rounded font-bold"><option value="المرحلة الأولى">المرحلة الأولى</option><option value="المرحلة الثانية">المرحلة الثانية</option></select>
-                            <select id="exGroup" class="p-2 border rounded font-bold"><option value="A1">A1</option><option value="A2">A2</option><option value="B1">B1</option><option value="B2">B2</option><option value="C1">C1</option><option value="C2">C2</option><option value="D1">D1</option><option value="D2">D2</option></select>
-                            <select id="exStudy" class="p-2 border rounded font-bold"><option value="صباحي">صباحي</option><option value="مسائي">مسائي</option></select>
+                            <select id="exStage" class="p-2 border rounded font-bold text-emerald-900 bg-white">
+                                <option value="المرحلة الأولى" selected>المرحلة الأولى (الجدد)</option>
+                                <option value="المرحلة الثانية">المرحلة الثانية</option>
+                            </select>
+                            <select id="exGroup" class="p-2 border rounded font-bold bg-white"><option value="A1">A1</option><option value="A2">A2</option><option value="B1">B1</option><option value="B2">B2</option><option value="C1">C1</option><option value="C2">C2</option><option value="D1">D1</option><option value="D2">D2</option></select>
+                            <select id="exStudy" class="p-2 border rounded font-bold bg-white"><option value="صباحي">صباحي</option><option value="مسائي">مسائي</option></select>
                         </div>
                         <input type="file" id="exFile" accept=".xlsx, .xls, .csv" class="block w-full bg-white p-1 border rounded">
-                        <button onclick="uploadOrUpdateExcel()" class="bg-emerald-800 text-white p-2.5 rounded font-bold shadow w-full">🚀 رفع وحفظ البيانات من إكسل</button>
+                        <button onclick="uploadOrUpdateExcel()" class="bg-emerald-800 text-white p-2.5 rounded font-bold shadow w-full">🚀 رفع وحفظ البيانات من إكسل للمرحلة المختارة</button>
                     </div>
 
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-300 space-y-3">
-                        <h3 class="font-bold text-slate-900">➕ إضافة طالب جديد يدوياً لشعبة:</h3>
+                        <h3 class="font-bold text-slate-900">➕ إضافة طالب جديد يدوياً لشعبة ومرحلة:</h3>
                         <div>
                             <label class="block font-bold mb-1 text-slate-700">اسم الطالب الثلاثي:</label>
                             <input type="text" id="manualStudentName" placeholder="أدخل اسم الطالب الكامل" class="w-full p-2 border rounded bg-white font-bold">
@@ -633,9 +591,9 @@
                         <div class="grid grid-cols-3 gap-2">
                             <div>
                                 <label class="block font-bold mb-1 text-slate-700">المرحلة:</label>
-                                <select id="manualStudentStage" class="w-full p-1.5 border rounded font-bold bg-white text-xs">
-                                    <option value="المرحلة الأولى">الأولى</option>
-                                    <option value="المرحلة الثانية">الثانية</option>
+                                <select id="manualStudentStage" class="w-full p-1.5 border rounded font-bold bg-white text-xs text-emerald-900">
+                                    <option value="المرحلة الأولى" selected>المرحلة الأولى</option>
+                                    <option value="المرحلة الثانية">المرحلة الثانية</option>
                                 </select>
                             </div>
                             <div>
@@ -661,7 +619,7 @@
                 
                 <div class="bg-white p-4 rounded-xl border space-y-3">
                     <div class="flex justify-between items-center border-b pb-2">
-                        <h3 class="font-bold text-slate-800">🔍 تدقيق، نقل وإدارة أسماء الطلاب:</h3>
+                        <h3 class="font-bold text-slate-800">🔍 تدقيق، نقل وإدارة أسماء الطلاب (لكل مرحلة بشكل مستقل):</h3>
                         <div class="flex gap-2">
                             <button onclick="switchStageAudit('المرحلة الأولى')" id="btnStage1" class="px-3 py-1 bg-emerald-800 text-white rounded font-bold">المرحلة الأولى</button>
                             <button onclick="switchStageAudit('المرحلة الثانية')" id="btnStage2" class="px-3 py-1 bg-slate-200 text-slate-700 rounded font-bold">المرحلة الثانية</button>
@@ -690,6 +648,11 @@
                     <div class="bg-slate-100 p-3 rounded-xl border flex flex-wrap justify-between items-center gap-3 no-print">
                         <div class="flex items-center gap-2 flex-wrap">
                             <span class="font-bold text-emerald-900">⚙️ التصفية والفلترة:</span>
+                            <select id="memoFilterStage" onchange="generateAdminMemo()" class="p-1.5 border rounded-lg bg-white font-bold text-xs text-emerald-950">
+                                <option value="المرحلة الأولى">المرحلة الأولى</option>
+                                <option value="المرحلة الثانية" selected>المرحلة الثانية</option>
+                                <option value="ALL">جميع المراحل</option>
+                            </select>
                             <select id="memoFilterPenalty" onchange="generateAdminMemo()" class="p-1.5 border rounded-lg bg-white font-bold text-xs">
                                 <option value="ALL_PUNISHED">تصفية: كافة الطلبة المعاقبين فقط</option>
                                 <option value="تنبيه (3%)">الطلبة الصادر بحقهم (تنبيه) فقط</option>
@@ -755,7 +718,7 @@
                                         الأمر الإداري بغيابات الطلبة للعام الدراسي
                                     </div>
                                     <div class="flex justify-center gap-6 font-bold text-xs pt-1" contenteditable="true">
-                                        <span>المرحلة: <span id="memoDispStage">الأولى / الثانية</span></span>
+                                        <span>المرحلة: <span id="memoDispStage">الثانية</span></span>
                                         <span>الشعبة: <span id="memoDispGroup">عامة</span></span>
                                     </div>
                                 </div>
@@ -1047,26 +1010,31 @@
         let currentAuditStage = 'المرحلة الأولى';
         let copiedStyleStore = null;
 
-        // 📅 حساب بداية الأسبوع الفعلي (الأحد -> الخميس، والجمعة/السبت بداية أسبوع جديد)
+        // ✅ القاعدة الذهبية: أي طالب قديم في الداتا بدون حقل stage يُعتبر "المرحلة الثانية" تلقائياً
+        function normalizeStage(val) {
+            const s = String(val || '').trim();
+            if (s === 'المرحلة الأولى' || s === 'الأولى' || s === '1') return 'المرحلة الأولى';
+            return 'المرحلة الثانية';
+        }
+
+        function matchesStage(studentStage, filterStage) {
+            if (!filterStage || filterStage === 'ALL') return true;
+            return normalizeStage(studentStage) === normalizeStage(filterStage);
+        }
+
         function getAcademicSundayTimestamp(dateObj = new Date()) {
             const d = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
             const day = d.getDay();
-            if (day === 5) {
-                d.setDate(d.getDate() + 2);
-            } else if (day === 6) {
-                d.setDate(d.getDate() + 1);
-            } else {
-                d.setDate(d.getDate() - day);
-            }
+            if (day === 5) d.setDate(d.getDate() + 2);
+            else if (day === 6) d.setDate(d.getDate() + 1);
+            else d.setDate(d.getDate() - day);
             return d.getTime();
         }
 
         function getEffectiveAcademicWeekNumber() {
             let baseWeek = parseInt(db.currentAcademicWeek) || 1;
             const isAuto = db.autoWeekEnabled !== false;
-            if (!isAuto || !db.weekAnchorSunday) {
-                return baseWeek;
-            }
+            if (!isAuto || !db.weekAnchorSunday) return baseWeek;
             const currentSun = getAcademicSundayTimestamp(new Date());
             const anchorSun = Number(db.weekAnchorSunday);
             const diffWeeks = Math.floor((currentSun - anchorSun) / (7 * 24 * 60 * 60 * 1000));
@@ -1113,7 +1081,7 @@
                 updateAutoWeekButtonUI();
                 document.getElementById('statusText').innerText = `✅ تم التحديث (${db.students.length} طالب)`;
                 if (nextState) {
-                    alert(`🟢 تم تفعيل الوضع التلقائي للأسابيع (الأسبوع الحالي: ${effectiveWeek}). ستُفتح المحاضرات تلقائياً للأساتذة مع نهاية كل أسبوع (الجمعة/السبت).`);
+                    alert(`🟢 تم تفعيل الوضع التلقائي للأسابيع (الأسبوع الحالي: ${effectiveWeek}).`);
                 } else {
                     alert(`🔴 تم إيقاف استقبال المحاضرات والتقدم التلقائي مؤقتاً.`);
                 }
@@ -1129,22 +1097,26 @@
 
         function ensureUniqueStudentIds(studentsList) {
             const seen = new Set();
-            let hasDuplicates = false;
+            let hasChanges = false;
             const fixedList = studentsList.map((st, idx) => {
                 let sid = String(st.id || '').trim();
+                const normalizedStg = normalizeStage(st.stage);
+                if (st.stage !== normalizedStg) {
+                    hasChanges = true;
+                }
                 if (!sid || seen.has(sid)) {
-                    hasDuplicates = true;
+                    hasChanges = true;
                     sid = generateUniqueStudentId(idx);
                     while (seen.has(sid)) {
                         sid = generateUniqueStudentId(idx + Math.floor(Math.random() * 1000));
                     }
                     seen.add(sid);
-                    return { ...st, id: sid };
+                    return { ...st, id: sid, stage: normalizedStg };
                 }
                 seen.add(sid);
-                return st;
+                return { ...st, stage: normalizedStg };
             });
-            return { fixedList, hasDuplicates };
+            return { fixedList, hasDuplicates: hasChanges };
         }
 
         function normalizeArray(val) {
@@ -1347,18 +1319,25 @@
         function getLogHours(log) {
             if (!log) return 2;
             let subName = (log.subject || '').trim();
-            if (subName.includes("العناية") || subName.includes("الشعر") || subName.includes("الأظافر")) {
-                return 2;
-            }
-            if (subName.includes("المستحضرات") || subName.includes("الجلدية") || subName.includes("الفطريات")) {
-                return 4;
-            }
+            if (subName.includes("العناية") || subName.includes("الشعر") || subName.includes("الأظافر")) return 2;
+            if (subName.includes("المستحضرات") || subName.includes("الجلدية") || subName.includes("الفطريات")) return 4;
             return 2;
         }
 
-        function getDefinedSubjectsList() {
+        // 📚 جلب قائمة المواد مع مراعاة المرحلة الدراسية (المواد القديمة بدون مرحلة تُعامل كـ المرحلة الثانية)
+        function getDefinedSubjectsList(stageFilter = 'ALL') {
             if (db.subjectConfigs && Object.keys(db.subjectConfigs).length > 0) {
-                return Object.keys(db.subjectConfigs);
+                const matched = [];
+                for (let key in db.subjectConfigs) {
+                    const cfg = db.subjectConfigs[key];
+                    if (!cfg) continue;
+                    const cfgStage = cfg.stage ? (cfg.stage === 'ALL' ? 'ALL' : normalizeStage(cfg.stage)) : 'المرحلة الثانية';
+                    const displayName = cfg.subjectName || key;
+                    if (stageFilter === 'ALL' || cfgStage === 'ALL' || cfgStage === normalizeStage(stageFilter)) {
+                        if (!matched.includes(displayName)) matched.push(displayName);
+                    }
+                }
+                return matched;
             }
             return [
                 "السلامة المهنية / 2", 
@@ -1424,7 +1403,6 @@
 
                 isInitialLoadDone = true;
 
-                // تهيئة نقطة البداية الزمنية أول مرة فقط دون المساس بالبيانات
                 let silentMetaUpdates = {};
                 if (!db.weekAnchorSunday && db.autoWeekEnabled !== false) {
                     db.weekAnchorSunday = getAcademicSundayTimestamp(new Date());
@@ -1436,15 +1414,15 @@
                 }
                 if (Object.keys(silentMetaUpdates).length > 0) {
                     isSavingNow = true;
-                    dbRef.update(silentMetaUpdates).finally(() => {
-                        isSavingNow = false;
-                    });
+                    dbRef.update(silentMetaUpdates).finally(() => { isSavingNow = false; });
                 }
 
                 const effectiveWeek = getEffectiveAcademicWeekNumber();
                 document.getElementById('academicWeekInput').value = effectiveWeek;
                 updateAutoWeekButtonUI();
-                document.getElementById('totalStudentsCounterBadge').innerText = `👥 الطلاب: ${db.students.length}`;
+                const st1Count = db.students.filter(s => normalizeStage(s.stage) === 'المرحلة الأولى').length;
+                const st2Count = db.students.filter(s => normalizeStage(s.stage) === 'المرحلة الثانية').length;
+                document.getElementById('totalStudentsCounterBadge').innerText = `👥 المجموع: ${db.students.length} (أولى: ${st1Count} | ثانية: ${st2Count})`;
                 document.getElementById('statusText').innerText = `✅ متصل بالسحابة (${db.students.length} طالب | ${Object.keys(db.teachers).length} أستاذ)`;
             } else {
                 document.getElementById('statusText').innerText = "⚠️ السحابة فارغة حالياً (في انتظار الإدخال)";
@@ -1479,7 +1457,7 @@
             dbRef.on('value', (snapshot) => {
                 if (isSavingNow) return;
                 processIncomingSnapshot(snapshot);
-            }, (error) => {
+            }, () => {
                 document.getElementById('statusText').innerText = "❌ خطأ في الاتصال بالسحابة";
                 if(window._hideSplash) window._hideSplash();
             });
@@ -1502,10 +1480,16 @@
             isSavingNow = true;
             document.getElementById('statusText').innerText = "⏳ جاري الحفظ في السحابة...";
             
+            const updateCounterBadge = () => {
+                const st1Count = db.students.filter(s => normalizeStage(s.stage) === 'المرحلة الأولى').length;
+                const st2Count = db.students.filter(s => normalizeStage(s.stage) === 'المرحلة الثانية').length;
+                document.getElementById('totalStudentsCounterBadge').innerText = `👥 المجموع: ${db.students.length} (أولى: ${st1Count} | ثانية: ${st2Count})`;
+            };
+
             if (specificPath && db[specificPath] !== undefined) {
                 dbRef.child(specificPath).set(db[specificPath]).then(() => {
                     isSavingNow = false;
-                    document.getElementById('totalStudentsCounterBadge').innerText = `👥 الطلاب: ${db.students.length}`;
+                    updateCounterBadge();
                     document.getElementById('statusText').innerText = `✅ تم الحفظ سحابياً (${db.students.length} طالب)`;
                 }).catch((err) => {
                     isSavingNow = false;
@@ -1526,7 +1510,7 @@
                 admins: db.admins || {}
             }).then(() => {
                 isSavingNow = false;
-                document.getElementById('totalStudentsCounterBadge').innerText = `👥 الطلاب: ${db.students.length}`;
+                updateCounterBadge();
                 document.getElementById('statusText').innerText = `✅ تم الحفظ والمزامنة (${db.students.length} طالب)`;
             }).catch((err) => {
                 isSavingNow = false;
@@ -1565,7 +1549,6 @@
             tabs.forEach(x => {
                 let tabElem = document.getElementById('tab' + x.charAt(0).toUpperCase() + x.slice(1));
                 let btnElem = document.getElementById('btn' + x.charAt(0).toUpperCase() + x.slice(1));
-                
                 if (tabElem) tabElem.classList.add('hidden');
                 if (btnElem) {
                     if (x === 'admins') {
@@ -1578,7 +1561,6 @@
 
             let activeTab = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
             let activeBtn = document.getElementById('btn' + t.charAt(0).toUpperCase() + t.slice(1));
-            
             if (activeTab) activeTab.classList.remove('hidden');
             if (activeBtn) {
                 activeBtn.className = t === 'admins' 
@@ -1618,14 +1600,11 @@
             window.print();
         }
 
-        function applyTextFormat(command, value = null) {
-            document.execCommand(command, false, value);
-        }
+        function applyTextFormat(command, value = null) { document.execCommand(command, false, value); }
 
         function applyTextFontSize(sizePx) {
             let selection = window.getSelection();
             if (!selection.rangeCount || selection.isCollapsed) return;
-
             let range = selection.getRangeAt(0);
             let span = document.createElement("span");
             span.style.fontSize = sizePx;
@@ -1653,9 +1632,7 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const imgElem = document.getElementById('officialMemoLogoImg');
-                    if(imgElem) {
-                        imgElem.src = e.target.result;
-                    }
+                    if(imgElem) imgElem.src = e.target.result;
                 };
                 reader.readAsDataURL(file);
             }
@@ -1663,9 +1640,7 @@
 
         function toggleCCSection() {
             let ccElem = document.getElementById('memoCCSection');
-            if (ccElem) {
-                ccElem.classList.toggle('hidden');
-            }
+            if (ccElem) ccElem.classList.toggle('hidden');
         }
 
         function recalculateStudentAbsenceHours(student) {
@@ -1673,9 +1648,7 @@
             let total = 0;
             if (student.attendanceLog && student.attendanceLog.length > 0) {
                 student.attendanceLog.forEach(l => {
-                    if (l.status === 'ABSENT') {
-                        total += getLogHours(l);
-                    }
+                    if (l.status === 'ABSENT') total += getLogHours(l);
                 });
             }
             student.absenceHours = total;
@@ -1709,12 +1682,25 @@
             subLogs.forEach(l => absenceHours += getLogHours(l));
 
             let totalCourseHours = 60;
+            const stStage = normalizeStage(student.stage);
+
             if(db.subjectConfigs) {
                 let sNameClean = subjectName.trim().toLowerCase();
                 let foundKey = Object.keys(db.subjectConfigs).find(k => {
-                    let kClean = k.trim().toLowerCase();
+                    let cfg = db.subjectConfigs[k];
+                    if (!cfg) return false;
+                    let cfgStage = cfg.stage ? (cfg.stage === 'ALL' ? 'ALL' : normalizeStage(cfg.stage)) : 'المرحلة الثانية';
+                    if (cfgStage !== 'ALL' && cfgStage !== stStage) return false;
+                    let kClean = (cfg.subjectName || k).trim().toLowerCase();
                     return kClean === sNameClean || (kClean.length > 3 && sNameClean.includes(kClean)) || (sNameClean.length > 3 && kClean.includes(sNameClean));
                 });
+                if (!foundKey) {
+                    foundKey = Object.keys(db.subjectConfigs).find(k => {
+                        let cfg = db.subjectConfigs[k];
+                        let kClean = (cfg?.subjectName || k).trim().toLowerCase();
+                        return kClean === sNameClean || (kClean.length > 3 && sNameClean.includes(kClean)) || (sNameClean.length > 3 && kClean.includes(sNameClean));
+                    });
+                }
                 if(foundKey && db.subjectConfigs[foundKey]) {
                     totalCourseHours = db.subjectConfigs[foundKey].courseTotal || 60;
                 }
@@ -1744,34 +1730,38 @@
         function updateSubjectFilterDropdown() {
             let select = document.getElementById('exportSubjectFilter');
             if(!select) return;
-            let subjects = getDefinedSubjectsList();
+            let selStage = document.getElementById('exportStage') ? document.getElementById('exportStage').value : 'ALL';
+            let prevVal = select.value;
+            let subjects = getDefinedSubjectsList(selStage);
             let html = `<option value="ALL">كافة المواد الدراسية</option>`;
             subjects.forEach(sub => {
                 html += `<option value="${sub}">${sub}</option>`;
             });
             select.innerHTML = html;
+            if (prevVal && (prevVal === 'ALL' || subjects.includes(prevVal))) select.value = prevVal;
         }
 
         function renderUI() {
             if(!db.students) db.students = [];
             
+            let selStage = document.getElementById('exportStage') ? document.getElementById('exportStage').value : 'ALL';
             let selGroup = document.getElementById('exportGroup').value;
             let selStudy = document.getElementById('exportStudy').value;
             let selSubject = document.getElementById('exportSubjectFilter').value;
             let searchQuery = document.getElementById('searchStudentName') ? document.getElementById('searchStudentName').value.trim().toLowerCase() : '';
             let onlyAbsentChecked = document.getElementById('filterOnlyAbsentInPeriod') ? document.getElementById('filterOnlyAbsentInPeriod').checked : false;
             let timeFilter = getActiveTimeFilter();
-            
-            let subjects = getDefinedSubjectsList();
 
             let displayedStudents = db.students.filter(s => {
+                let matchStg = matchesStage(s.stage, selStage);
                 let matchG = matchesGroup(s.group, selGroup);
                 let matchS = matchesStudy(s.study, selStudy);
                 let matchName = !searchQuery || (s.name && s.name.toLowerCase().includes(searchQuery));
-                if (!matchG || !matchS || !matchName) return false;
+                if (!matchStg || !matchG || !matchS || !matchName) return false;
 
                 if (onlyAbsentChecked) {
-                    let hasAbsenceInPeriod = subjects.some(sub => {
+                    let stSubjects = getDefinedSubjectsList(normalizeStage(s.stage));
+                    let hasAbsenceInPeriod = stSubjects.some(sub => {
                         if (selSubject !== 'ALL' && !checkSubjectMatch(sub, selSubject)) return false;
                         return calculatePenaltyForSubject(s, sub, timeFilter.startDate, timeFilter.endDate, timeFilter.week).absenceHours > 0;
                     });
@@ -1781,7 +1771,9 @@
             });
 
             document.getElementById('attTable').innerHTML = displayedStudents.map(s => {
-                let subjectDetailsHtml = subjects.map(sub => {
+                let stStage = normalizeStage(s.stage);
+                let studentSubjects = getDefinedSubjectsList(stStage);
+                let subjectDetailsHtml = studentSubjects.map(sub => {
                     if(selSubject !== 'ALL' && !checkSubjectMatch(sub, selSubject)) return '';
                     let res = calculatePenaltyForSubject(s, sub, timeFilter.startDate, timeFilter.endDate, timeFilter.week);
                     let badgeClass = getPenaltyBadgeClass(res.penalty);
@@ -1795,10 +1787,12 @@
                     `;
                 }).filter(Boolean).join('');
 
+                let stageBadgeColor = stStage === 'المرحلة الأولى' ? 'bg-blue-100 text-blue-900' : 'bg-emerald-100 text-emerald-900';
+
                 return `
                     <tr class="hover:bg-slate-50">
                         <td onclick="showStudentModal('${s.id}')" class="p-2.5 font-bold text-emerald-800 cursor-pointer underline">${s.name}</td>
-                        <td class="p-2.5">${s.stage || 'المرحلة الأولى'} - شعبة ${s.group}</td>
+                        <td class="p-2.5 font-bold"><span class="${stageBadgeColor} px-2 py-0.5 rounded text-[10px] ml-1">${stStage}</span> شعبة ${s.group}</td>
                         <td class="p-2.5 font-bold text-emerald-900">${s.study || 'صباحي'}</td>
                         <td class="p-2.5 space-y-1">${subjectDetailsHtml || '<span class="text-slate-400">لا توجد غيابات مسجلة</span>'}</td>
                         <td class="p-2.5 space-x-1 space-x-reverse">
@@ -1819,7 +1813,7 @@
                     let lecturesText = (lecs.length > 0) 
                         ? lecs.map((l, idx) => `
                             <div class="flex items-center justify-between bg-slate-50 p-1.5 rounded my-1 border shadow-sm">
-                                <span><b class="text-emerald-900">[${l.day}]</b> ${l.subject} (شعبة ${l.group} - <span class="text-emerald-700 font-bold">${l.study || 'صباحي'}</span>) - ${l.time}</span>
+                                <span><b class="text-emerald-900">[${l.day}]</b> ${l.subject} (<span class="text-amber-800 font-bold">${normalizeStage(l.stage)}</span> | شعبة ${l.group} - <span class="text-emerald-700 font-bold">${l.study || 'صباحي'}</span>) - ${l.time}</span>
                                 <div class="space-x-1 space-x-reverse">
                                     <button onclick="editLecture('${key}', ${idx})" class="text-amber-800 font-bold px-2 py-0.5 text-[10px] bg-amber-100 hover:bg-amber-200 rounded">تعديل ✏️</button>
                                     <button onclick="deleteLecture('${key}', ${idx})" class="text-red-600 font-bold px-2 py-0.5 text-[10px] hover:bg-red-100 rounded">حذف 🗑️</button>
@@ -1850,15 +1844,14 @@
         function matchesMemoGroup(studentGroup, filterGroup) {
             if(filterGroup === 'ALL') return true;
             if(studentGroup === filterGroup) return true;
-            if(['A', 'B', 'C', 'D'].includes(filterGroup)) {
-                return studentGroup && studentGroup.startsWith(filterGroup);
-            }
+            if(['A', 'B', 'C', 'D'].includes(filterGroup)) return studentGroup && studentGroup.startsWith(filterGroup);
             return false;
         }
 
         function generateAdminMemo() {
             if(!db.students) return;
 
+            const filterStage = document.getElementById('memoFilterStage') ? document.getElementById('memoFilterStage').value : 'المرحلة الثانية';
             const filterPenalty = document.getElementById('memoFilterPenalty') ? document.getElementById('memoFilterPenalty').value : 'ALL_PUNISHED';
             const filterGroup = document.getElementById('memoFilterGroup') ? document.getElementById('memoFilterGroup').value : 'ALL';
             const filterStudy = document.getElementById('memoFilterStudy') ? document.getElementById('memoFilterStudy').value : 'ALL';
@@ -1874,20 +1867,26 @@
                 else dispStudyElem.innerText = "الصباحية/المسائية";
             }
 
+            let dispStageElem = document.getElementById('memoDispStage');
+            if(dispStageElem) {
+                dispStageElem.innerText = filterStage === 'ALL' ? 'الأولى / الثانية' : filterStage.replace('المرحلة ', '');
+            }
+
             let dispGroupElem = document.getElementById('memoDispGroup');
             if(dispGroupElem) {
                 dispGroupElem.innerText = filterGroup === 'ALL' ? 'كافة الشعب' : 'شعبة ' + filterGroup;
             }
 
-            let subjects = getDefinedSubjectsList();
+            let subjects = getDefinedSubjectsList(filterStage);
 
-            document.getElementById('memoSubjectSuperHeader').colSpan = subjects.length;
-            document.getElementById('memoSubjectsHeader').innerHTML = subjects.map(s => `<th class="subject-header">${s}</th>`).join('');
+            document.getElementById('memoSubjectSuperHeader').colSpan = Math.max(1, subjects.length);
+            document.getElementById('memoSubjectsHeader').innerHTML = subjects.map(s => `<th class="subject-header">${s}</th>`).join('') || `<th class="subject-header">لا توجد مواد محددة لهذه المرحلة</th>`;
 
             let rowsHtml = [];
             let counter = 1;
 
             db.students.forEach(st => {
+                if(!matchesStage(st.stage, filterStage)) return;
                 if(!matchesMemoGroup(st.group, filterGroup)) return;
                 if(filterStudy !== 'ALL' && !matchesStudy(st.study, filterStudy)) return;
 
@@ -1897,9 +1896,7 @@
                 subjects.forEach(sub => {
                     let res = calculatePenaltyForSubject(st, sub, startDate, endDate, filterWeek !== 'ALL' ? filterWeek : null);
                     subjectPenaltyMap[sub] = res.penalty;
-                    if (res.penalty !== 'بدون عقوبة') {
-                        hasPunishment = true;
-                    }
+                    if (res.penalty !== 'بدون عقوبة') hasPunishment = true;
                 });
 
                 if(!hasPunishment) return;
@@ -1911,17 +1908,12 @@
 
                 let cellsHtml = subjects.map(sub => {
                     let currentP = subjectPenaltyMap[sub] || 'بدون عقوبة';
-
                     let cellStyleClass = "text-slate-600 bg-white";
                     if(currentP.includes('تنبيه')) cellStyleClass = "text-amber-900 bg-amber-100 font-bold";
                     else if(currentP.includes('إنذار أولي')) cellStyleClass = "text-orange-900 bg-orange-100 font-bold";
                     else if(currentP.includes('إنذار نهائي') || currentP.includes('فصل')) cellStyleClass = "text-red-900 bg-red-100 font-extrabold";
 
-                    return `
-                        <td class="p-1 text-[9.5px] font-bold text-center ${cellStyleClass}">
-                            ${currentP}
-                        </td>
-                    `;
+                    return `<td class="p-1 text-[9.5px] font-bold text-center ${cellStyleClass}">${currentP}</td>`;
                 }).join('');
 
                 rowsHtml.push(`
@@ -1940,6 +1932,7 @@
         function exportAdminMemoToExcel() {
             if(!db.students || db.students.length === 0) return alert('لا توجد بيانات طلاب للتصدير');
 
+            const filterStage = document.getElementById('memoFilterStage') ? document.getElementById('memoFilterStage').value : 'المرحلة الثانية';
             const filterPenalty = document.getElementById('memoFilterPenalty') ? document.getElementById('memoFilterPenalty').value : 'ALL_PUNISHED';
             const filterGroup = document.getElementById('memoFilterGroup') ? document.getElementById('memoFilterGroup').value : 'ALL';
             const filterStudy = document.getElementById('memoFilterStudy') ? document.getElementById('memoFilterStudy').value : 'ALL';
@@ -1947,17 +1940,19 @@
             const startDate = document.getElementById('memoStartDate') ? document.getElementById('memoStartDate').value : null;
             const endDate = document.getElementById('memoEndDate') ? document.getElementById('memoEndDate').value : null;
 
-            let subjects = getDefinedSubjectsList();
+            let subjects = getDefinedSubjectsList(filterStage);
             let exportData = [];
             let counter = 1;
 
             db.students.forEach(st => {
+                if(!matchesStage(st.stage, filterStage)) return;
                 if(!matchesMemoGroup(st.group, filterGroup)) return;
                 if(filterStudy !== 'ALL' && !matchesStudy(st.study, filterStudy)) return;
 
                 let rowObj = {
                     "ت": counter,
                     "اسم الطالب": st.name,
+                    "المرحلة": normalizeStage(st.stage),
                     "الشعبة والدراسة": `${st.group} (${st.study || 'صباحي'})`
                 };
 
@@ -1989,7 +1984,7 @@
             const worksheet = XLSX.utils.json_to_sheet(exportData);
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, "الأمر الإداري بالغيابات");
-            XLSX.writeFile(workbook, `الأمر_الإداري_بالغيابات.xlsx`);
+            XLSX.writeFile(workbook, `الأمر_الإداري_بالغيابات_${filterStage}.xlsx`);
         }
 
         function updateTeachersDropdown() {
@@ -2057,12 +2052,8 @@
             document.getElementById('memoBodyText').innerHTML = t.bodyText || '';
             document.getElementById('memoAttachmentsArea').innerHTML = t.attachments || '';
             document.getElementById('memoSignArea').innerHTML = t.signArea || '';
-            if(t.ccSection) {
-                document.getElementById('memoCCSection').innerHTML = t.ccSection;
-            }
-            if(t.copyrightFooter) {
-                document.getElementById('memoCopyrightFooter').innerHTML = t.copyrightFooter;
-            }
+            if(t.ccSection) document.getElementById('memoCCSection').innerHTML = t.ccSection;
+            if(t.copyrightFooter) document.getElementById('memoCopyrightFooter').innerHTML = t.copyrightFooter;
             if(t.logoSrc) {
                 let logoImgElem = document.getElementById('officialMemoLogoImg');
                 if(logoImgElem) logoImgElem.src = t.logoSrc;
@@ -2143,6 +2134,7 @@
             document.getElementById('tSelectTeacher').value = teacherKey;
             document.getElementById('tDay').value = lec.day || 'الأحد';
             document.getElementById('tSub').value = lec.subject || '';
+            document.getElementById('tLecStage').value = normalizeStage(lec.stage);
             document.getElementById('tGrp').value = lec.group || 'A';
             document.getElementById('tLecStudy').value = lec.study || 'صباحي';
             document.getElementById('tTime').value = lec.time || '';
@@ -2166,6 +2158,7 @@
             const key = document.getElementById('tSelectTeacher').value;
             const day = document.getElementById('tDay').value;
             const sub = document.getElementById('tSub').value.trim();
+            const stage = document.getElementById('tLecStage').value;
             const grp = document.getElementById('tGrp').value;
             const study = document.getElementById('tLecStudy').value;
             const time = document.getElementById('tTime').value.trim();
@@ -2178,7 +2171,7 @@
             if(editingLecIndex >= 0 && editingTeacherKey && db.teachers[editingTeacherKey]) {
                 let oldLectures = normalizeArray(db.teachers[editingTeacherKey].lectures);
                 let existingWeeklySubmissions = (oldLectures[editingLecIndex] && oldLectures[editingLecIndex].weeklySubmissions) ? oldLectures[editingLecIndex].weeklySubmissions : {};
-                let newLecObj = { day, subject: sub, group: grp, study, time: time || '08:30', weeklySubmissions: existingWeeklySubmissions };
+                let newLecObj = { day, subject: sub, stage, group: grp, study, time: time || '08:30', weeklySubmissions: existingWeeklySubmissions };
 
                 if(editingTeacherKey !== key) {
                     oldLectures.splice(editingLecIndex, 1);
@@ -2192,7 +2185,7 @@
                 }
             } else {
                 let currentLecs = normalizeArray(db.teachers[key].lectures);
-                currentLecs.push({ day, subject: sub, group: grp, study: study || 'صباحي', time: time || '08:30' });
+                currentLecs.push({ day, subject: sub, stage, group: grp, study: study || 'صباحي', time: time || '08:30' });
                 db.teachers[key].lectures = currentLecs;
             }
 
@@ -2220,6 +2213,7 @@
             }
         }
 
+        // 🔓 فتح محاضرة واحدة
         function unlockLectureForTeacher(teacherKey, lecIdx, weekName) {
             if(db.teachers && db.teachers[teacherKey]) {
                 let lecs = normalizeArray(db.teachers[teacherKey].lectures);
@@ -2233,56 +2227,182 @@
             }
         }
 
+        // 🔓 فتح جميع محاضرات أستاذ محدد دفعة واحدة (أو أسبوع محدد له)
+        function unlockAllLecturesForTeacher(teacherKey, specificWeekPrefix = null) {
+            if(!db.teachers || !db.teachers[teacherKey]) return;
+            const teacher = db.teachers[teacherKey];
+            const label = specificWeekPrefix ? `جميع محاضرات (${teacher.name}) في (${specificWeekPrefix})` : `جميع المحاضرات المقفلة للأستاذ (${teacher.name})`;
+            if(!confirm(`هل تريد فتح ${label}؟`)) return;
+
+            let lecs = normalizeArray(teacher.lectures);
+            let unlockedCount = 0;
+            lecs.forEach(lec => {
+                if(lec.weeklySubmissions) {
+                    for(let subKey in lec.weeklySubmissions) {
+                        if(lec.weeklySubmissions[subKey] === true) {
+                            if(!specificWeekPrefix || subKey.startsWith(specificWeekPrefix + '_')) {
+                                delete lec.weeklySubmissions[subKey];
+                                unlockedCount++;
+                            }
+                        }
+                    }
+                }
+            });
+            db.teachers[teacherKey].lectures = lecs;
+            saveToCloud('teachers');
+            renderUI();
+            alert(`✅ تم فتح (${unlockedCount}) محاضرة بنجاح!`);
+        }
+
+        // 🔓 فتح جميع المحاضرات المقفلة لكل الأساتذة في النظام
+        function unlockAllSystemLectures() {
+            if(!db.teachers) return;
+            if(!confirm('⚠️ هل أنت متأكد من فتح جميع المحاضرات المقفلة لجميع الأساتذة دفعة واحدة؟')) return;
+
+            let unlockedCount = 0;
+            for(let key in db.teachers) {
+                let lecs = normalizeArray(db.teachers[key].lectures);
+                lecs.forEach(lec => {
+                    if(lec.weeklySubmissions) {
+                        for(let subKey in lec.weeklySubmissions) {
+                            if(lec.weeklySubmissions[subKey] === true) {
+                                delete lec.weeklySubmissions[subKey];
+                                unlockedCount++;
+                            }
+                        }
+                    }
+                });
+                db.teachers[key].lectures = lecs;
+            }
+            saveToCloud('teachers');
+            renderUI();
+            alert(`✅ تم فتح (${unlockedCount}) محاضرة لجميع الأساتذة بنجاح!`);
+        }
+
+        // 🗂️ عرض المحاضرات المقفلة مجمعة حسب الأستاذ ثم الأسبوع الدراسي
         function renderLockedLectures() {
             let container = document.getElementById('lockedLecturesContainer');
-            let lockedList = [];
+            let unlockAllBtn = document.getElementById('unlockAllSystemLecturesBtn');
+            let teacherGroups = [];
+            let totalLockedCount = 0;
 
             if(db.teachers) {
                 for(let key in db.teachers) {
                     let teacher = db.teachers[key];
                     let lecs = normalizeArray(teacher.lectures);
+                    let weeksMap = {};
+                    let teacherTotal = 0;
+
                     lecs.forEach((lec, idx) => {
                         if(lec.weeklySubmissions) {
-                            for(let week in lec.weeklySubmissions) {
-                                if(lec.weeklySubmissions[week] === true) {
-                                    lockedList.push({ key, teacherName: teacher.name, subject: lec.subject, group: lec.group, study: lec.study || 'صباحي', week, lecIdx: idx });
+                            for(let subKey in lec.weeklySubmissions) {
+                                if(lec.weeklySubmissions[subKey] === true) {
+                                    let weekLabel = subKey.split('_')[0] || subKey;
+                                    if(!weeksMap[weekLabel]) weeksMap[weekLabel] = [];
+                                    weeksMap[weekLabel].push({
+                                        subject: lec.subject,
+                                        stage: normalizeStage(lec.stage),
+                                        group: lec.group,
+                                        study: lec.study || 'صباحي',
+                                        subKey: subKey,
+                                        lecIdx: idx
+                                    });
+                                    teacherTotal++;
+                                    totalLockedCount++;
                                 }
                             }
                         }
                     });
+
+                    if(teacherTotal > 0) {
+                        teacherGroups.push({
+                            key,
+                            teacherName: teacher.name,
+                            total: teacherTotal,
+                            weeksMap
+                        });
+                    }
                 }
             }
 
-            if(lockedList.length === 0) {
-                container.innerHTML = `<p class="col-span-full text-slate-400 text-center py-2">لا توجد محاضرات مقفلة حالياً لدى الأساتذة.</p>`;
+            if(totalLockedCount === 0) {
+                if(unlockAllBtn) unlockAllBtn.classList.add('hidden');
+                container.innerHTML = `<p class="text-slate-400 text-center py-2">لا توجد محاضرات مقفلة حالياً لدى الأساتذة.</p>`;
                 return;
             }
 
-            container.innerHTML = lockedList.map(item => `
-                <div class="bg-white p-2.5 rounded-xl border flex justify-between items-center shadow-sm">
-                    <div>
-                        <div class="font-bold text-slate-800">${item.teacherName}</div>
-                        <div class="text-[10px] text-slate-500">${item.subject} (${item.group} - ${item.study}) - <span class="text-amber-800 font-bold">${item.week}</span></div>
+            if(unlockAllBtn) {
+                unlockAllBtn.classList.remove('hidden');
+                unlockAllBtn.innerText = `🔓 فتح جميع المحاضرات المقفلة (${totalLockedCount})`;
+            }
+
+            container.innerHTML = teacherGroups.map(tg => {
+                let weeksHtml = Object.keys(tg.weeksMap).sort().map(weekLabel => {
+                    let items = tg.weeksMap[weekLabel];
+                    let itemsHtml = items.map(item => `
+                        <div class="bg-slate-50 px-2.5 py-1.5 rounded-lg border flex justify-between items-center text-[11px]">
+                            <span>
+                                <b class="text-emerald-900">${item.subject}</b>
+                                <span class="text-slate-600">(${item.stage} | شعبة ${item.group} - ${item.study})</span>
+                            </span>
+                            <button onclick="unlockLectureForTeacher('${tg.key}', ${item.lecIdx}, '${item.subKey}')" class="bg-emerald-100 hover:bg-emerald-700 text-emerald-900 hover:text-white px-2 py-0.5 rounded font-bold text-[10px] transition">
+                                🔓 فتح
+                            </button>
+                        </div>
+                    `).join('');
+
+                    return `
+                        <div class="border border-amber-200 rounded-xl p-2 bg-amber-50/40 space-y-1.5">
+                            <div class="flex justify-between items-center">
+                                <span class="font-extrabold text-amber-950 text-[11px]">📅 ${weekLabel} (${items.length} محاضرات مقفلة)</span>
+                                <button onclick="unlockAllLecturesForTeacher('${tg.key}', '${weekLabel}')" class="bg-amber-200 hover:bg-amber-300 text-amber-950 px-2 py-0.5 rounded font-bold text-[10px]">
+                                    🔓 فتح ${weekLabel} للأستاذ
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                                ${itemsHtml}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="bg-white p-3 rounded-xl border border-amber-300 shadow-sm space-y-2">
+                        <div class="flex flex-wrap justify-between items-center gap-2 border-b pb-2">
+                            <div class="font-extrabold text-slate-900 text-xs">
+                                👨‍🏫 ${tg.teacherName} <span class="bg-red-100 text-red-800 px-2 py-0.5 rounded-full text-[10px] mr-1">${tg.total} مقفلة</span>
+                            </div>
+                            <button onclick="unlockAllLecturesForTeacher('${tg.key}')" class="bg-emerald-700 hover:bg-emerald-800 text-white px-3 py-1 rounded-lg text-[11px] font-bold shadow">
+                                🔓 فتح كل محاضرات الأستاذ (${tg.total})
+                            </button>
+                        </div>
+                        <div class="space-y-2">
+                            ${weeksHtml}
+                        </div>
                     </div>
-                    <button onclick="unlockLectureForTeacher('${item.key}', ${item.lecIdx}, '${item.week}')" class="bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold shadow">🔓 فتح المحاضرة</button>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         function saveSubjectConfig() {
+            const stage = document.getElementById('confSubStage').value;
             const name = document.getElementById('confSubName').value.trim();
             const th = parseInt(document.getElementById('confSubTheory').value) || 0;
             const pr = parseInt(document.getElementById('confSubPractical').value) || 0;
             if(!name) return alert('يرجى كتابة اسم المادة');
             const courseTotal = th + pr;
             if(!db.subjectConfigs) db.subjectConfigs = {};
-            db.subjectConfigs[name] = { 
-                theoryHours: th, 
-                practicalHours: pr, 
-                courseTotal, 
-                limit3: Math.round((courseTotal * 0.03)*10)/10, 
-                limit6: Math.round((courseTotal * 0.06)*10)/10, 
-                limit9: Math.round((courseTotal * 0.09)*10)/10 
+
+            const configKey = stage === 'ALL' ? name : `${stage}__${name}`;
+            db.subjectConfigs[configKey] = {
+                subjectName: name,
+                stage: stage,
+                theoryHours: th,
+                practicalHours: pr,
+                courseTotal,
+                limit3: Math.round((courseTotal * 0.03)*10)/10,
+                limit6: Math.round((courseTotal * 0.06)*10)/10,
+                limit9: Math.round((courseTotal * 0.09)*10)/10
             };
             saveToCloud('subjectConfigs');
             renderSubjectConfigsTable();
@@ -2291,9 +2411,10 @@
             document.getElementById('confSubName').value = "";
         }
 
-        function deleteSubjectConfig(nameKey) {
-            if(confirm(`حذف مادة (${nameKey})؟`)) {
-                delete db.subjectConfigs[nameKey];
+        function deleteSubjectConfig(encodedKey) {
+            const key = decodeURIComponent(encodedKey);
+            if(confirm('حذف المادة من جدول الساعات؟')) {
+                delete db.subjectConfigs[key];
                 saveToCloud('subjectConfigs');
                 renderSubjectConfigsTable();
                 updateSubjectFilterDropdown();
@@ -2302,206 +2423,343 @@
         }
 
         function renderSubjectConfigsTable() {
-            let container = document.getElementById('subConfigTable');
-            if(!container) return;
+            let tbody = document.getElementById('subConfigTable');
+            if(!tbody) return;
             let rows = [];
             if(db.subjectConfigs) {
-                for(let sub in db.subjectConfigs) {
-                    let c = db.subjectConfigs[sub];
+                for(let key in db.subjectConfigs) {
+                    let s = db.subjectConfigs[key];
+                    if(!s) continue;
+                    let stageText = s.stage === 'ALL' ? 'مشتركة للمرحلتين' : normalizeStage(s.stage);
+                    let displayName = s.subjectName || key;
                     rows.push(`
                         <tr>
-                            <td class="p-2.5 font-bold text-emerald-900">${sub}</td>
-                            <td class="p-2.5 font-bold">نظري: ${c.theoryHours}س | عملي: ${c.practicalHours}س</td>
-                            <td class="p-2.5 font-bold bg-slate-100">${c.courseTotal} س</td>
-                            <td class="p-2.5 font-bold text-amber-800 bg-amber-50">${c.limit3} س</td>
-                            <td class="p-2.5 font-bold text-orange-800 bg-orange-50">${c.limit6} س</td>
-                            <td class="p-2.5 font-bold text-red-800 bg-red-50">${c.limit9} س</td>
-                            <td class="p-2.5 font-extrabold text-red-900 bg-red-100">أكثر من ${c.limit9} س</td>
-                            <td class="p-2.5"><button onclick="deleteSubjectConfig('${sub}')" class="bg-red-100 text-red-700 px-2 py-1 rounded font-bold">حذف 🗑️</button></td>
+                            <td class="p-2.5 font-bold text-amber-900">${stageText}</td>
+                            <td class="p-2.5 font-bold text-emerald-950">${displayName}</td>
+                            <td class="p-2.5">${s.theoryHours} نظري + ${s.practicalHours} عملي</td>
+                            <td class="p-2.5 font-bold">${s.courseTotal} ساعة</td>
+                            <td class="p-2.5 text-amber-700 font-bold">${s.limit3} ساعة</td>
+                            <td class="p-2.5 text-orange-700 font-bold">${s.limit6} ساعة</td>
+                            <td class="p-2.5 text-red-700 font-bold">${s.limit9} ساعة</td>
+                            <td class="p-2.5 text-red-900 font-extrabold">أكثر من ${s.limit9}</td>
+                            <td class="p-2.5"><button onclick="deleteSubjectConfig('${encodeURIComponent(key)}')" class="bg-red-100 text-red-700 px-2 py-0.5 rounded font-bold">حذف</button></td>
                         </tr>
                     `);
                 }
             }
-            container.innerHTML = rows.join('') || `<tr><td colspan="8" class="p-3 text-center text-slate-400">لا توجد مواد مضافة</td></tr>`;
+            tbody.innerHTML = rows.join('') || `<tr><td colspan="9" class="p-3 text-center text-slate-400">لا توجد مواد محددة الساعات بعد</td></tr>`;
         }
 
         function addHoliday() {
             const date = document.getElementById('holDate').value;
             const reason = document.getElementById('holReason').value.trim();
             const group = document.getElementById('holGroup').value;
-            if(!date || !reason) return alert('يرجى اختيار التاريخ والسبب');
+            if(!date || !reason) return alert('يرجى تحديد التاريخ والسبب');
             if(!db.holidays) db.holidays = {};
-            db.holidays[date] = { reason, group };
+            db.holidays[date] = { date, reason, group };
             saveToCloud('holidays');
             renderHolidaysTable();
+            document.getElementById('holDate').value = "";
+            document.getElementById('holReason').value = "";
         }
 
-        function deleteHoliday(dateKey) {
-            if(confirm(`حذف عطلة يوم (${dateKey})؟`)) {
-                delete db.holidays[dateKey];
+        function deleteHoliday(key) {
+            if(confirm('إلغاء وحذف العطلة؟')) {
+                delete db.holidays[key];
                 saveToCloud('holidays');
                 renderHolidaysTable();
             }
         }
 
         function renderHolidaysTable() {
-            let container = document.getElementById('holTable');
-            if(!container) return;
+            let tbody = document.getElementById('holTable');
+            if(!tbody) return;
             let rows = [];
             if(db.holidays) {
-                for(let date in db.holidays) {
-                    let h = db.holidays[date];
-                    rows.push(`
-                        <tr>
-                            <td class="p-2.5 font-bold text-red-700 font-mono">${date}</td>
-                            <td class="p-2.5 font-bold">${h.reason}</td>
-                            <td class="p-2.5">${h.group === 'ALL' ? 'جميع الشعب' : 'شعبة ' + h.group}</td>
-                            <td class="p-2.5"><button onclick="deleteHoliday('${date}')" class="bg-red-100 text-red-700 px-2 py-1 rounded font-bold">حذف 🗑️</button></td>
-                        </tr>
-                    `);
+                for(let key in db.holidays) {
+                    let h = db.holidays[key];
+                    rows.push(`<tr><td class="p-2.5 font-mono font-bold text-red-700">${h.date}</td><td class="p-2.5 font-bold">${h.reason}</td><td class="p-2.5">${h.group === 'ALL' ? 'جميع الشعب' : 'شعبة ' + h.group}</td><td class="p-2.5"><button onclick="deleteHoliday('${key}')" class="bg-red-100 text-red-700 px-2 py-0.5 rounded font-bold">حذف</button></td></tr>`);
                 }
             }
-            container.innerHTML = rows.join('') || `<tr><td colspan="4" class="p-3 text-center text-slate-400">لا توجد عطل رسمية</td></tr>`;
+            tbody.innerHTML = rows.join('') || `<tr><td colspan="4" class="p-3 text-center text-slate-400">لا توجد عطل مسجلة</td></tr>`;
         }
 
-        function showStudentModal(id) {
-            activeStudentId = id;
-            const s = (db.students || []).find(x => String(x.id) === String(id));
-            if(!s) return;
+        function switchStageAudit(stageName) {
+            currentAuditStage = stageName;
+            document.getElementById('btnStage1').className = stageName === 'المرحلة الأولى' ? "px-3 py-1 bg-emerald-800 text-white rounded font-bold" : "px-3 py-1 bg-slate-200 text-slate-700 rounded font-bold";
+            document.getElementById('btnStage2').className = stageName === 'المرحلة الثانية' ? "px-3 py-1 bg-emerald-800 text-white rounded font-bold" : "px-3 py-1 bg-slate-200 text-slate-700 rounded font-bold";
+            renderAuditButtons(stageName);
+            document.getElementById('groupPreviewArea').innerHTML = `<p class="text-slate-400 text-center py-4">اختر الشعبة والدراسة لعرض طلاب (${stageName}) وإدارتهم.</p>`;
+        }
 
-            document.getElementById('modalStudentTitle').innerText = `سجل الطالب: ${s.name} (${s.stage || 'المرحلة الأولى'} - شعبة ${s.group})`;
-            
-            let grid = document.getElementById('modalCalendarGrid');
-            if(!s.attendanceLog || s.attendanceLog.length === 0) {
-                grid.innerHTML = `<p class="col-span-full text-slate-400 p-4 text-center">لا توجد سجلات غياب مفصلة.</p>`;
-            } else {
-                grid.innerHTML = s.attendanceLog.map((l, idx) => {
-                    let isExcused = l.status === 'EXCUSED';
-                    let h = getLogHours(l);
+        function renderAuditButtons(stage) {
+            const subGroups = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2'];
+            let html = '';
+
+            ['صباحي', 'مسائي'].forEach(studyType => {
+                let btns = subGroups.map(g => {
+                    let count = (db.students || []).filter(s =>
+                        normalizeStage(s.stage) === stage &&
+                        s.group === g &&
+                        (s.study || 'صباحي') === studyType
+                    ).length;
+
+                    let badge = count > 0
+                        ? `<span class="bg-emerald-700 text-white px-1.5 py-0.5 rounded-full text-[10px] mr-1">${count}</span>`
+                        : `<span class="bg-slate-200 text-slate-500 px-1.5 py-0.5 rounded-full text-[10px] mr-1">0</span>`;
+
                     return `
-                        <div class="p-2.5 rounded-xl border text-center shadow-sm space-y-1 ${isExcused ? 'bg-amber-50 border-amber-300 text-amber-900' : 'bg-red-50 border-red-300 text-red-900'} flex justify-between items-center">
-                            <div class="text-right">
-                                <div class="font-bold text-[11px]">${isExcused ? '🟡 مجاز' : '🔴 غائب'} (${l.subject}) - <span class="font-extrabold">${h}س</span></div>
-                                <div class="text-[9px] font-mono text-slate-700">📅 ${l.date || ''} ${l.week ? '| ' + l.week : ''}</div>
-                            </div>
-                            <button onclick="deleteSingleLog('${id}', ${idx})" class="bg-red-600 text-white px-1.5 py-0.5 rounded text-[9px] font-bold">حذف الغياب 🗑️</button>
-                        </div>
+                        <button onclick="previewGroupStudents('${g}', '${studyType}')" class="bg-white border border-slate-300 hover:border-emerald-700 hover:bg-emerald-50 text-slate-800 px-2.5 py-1.5 rounded-lg font-bold shadow-sm transition flex items-center justify-center">
+                            <span>شعبة ${g}</span>${badge}
+                        </button>
                     `;
                 }).join('');
-            }
-            document.getElementById('studentModal').classList.remove('hidden');
+
+                html += `
+                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 flex flex-wrap items-center gap-2">
+                        <span class="font-extrabold text-emerald-950 min-w-[115px]">${studyType === 'صباحي' ? '☀️ الدراسة الصباحية:' : '🌙 الدراسة المسائية:'}</span>
+                        <div class="flex flex-wrap gap-1.5">${btns}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('auditButtonsContainer').innerHTML = html;
         }
 
-        function closeModal() { document.getElementById('studentModal').classList.add('hidden'); }
+        function previewGroupStudents(groupName, studyType) {
+            const area = document.getElementById('groupPreviewArea');
+            const filtered = (db.students || []).filter(s =>
+                normalizeStage(s.stage) === currentAuditStage &&
+                s.group === groupName &&
+                (s.study || 'صباحي') === studyType
+            );
 
-        function deleteSingleLog(studentId, logIndex) {
-            let s = (db.students || []).find(x => String(x.id) === String(studentId));
-            if(s && s.attendanceLog && s.attendanceLog[logIndex] !== undefined) {
-                s.attendanceLog.splice(logIndex, 1);
-                recalculateStudentAbsenceHours(s);
-                saveToCloud('students');
-                renderUI();
-                generateAdminMemo();
-                showStudentModal(studentId);
+            if(filtered.length === 0) {
+                area.innerHTML = `<p class="text-slate-400 text-center py-4 font-bold">لا يوجد طلاب مسجلون في (${currentAuditStage} - شعبة ${groupName} - ${studyType}).</p>`;
+                return;
             }
+
+            area.innerHTML = `
+                <div class="flex flex-wrap justify-between items-center gap-2 border-b pb-2 mb-2">
+                    <span class="font-extrabold text-emerald-950">📋 قائمة طلاب (${currentAuditStage} - شعبة ${groupName} - ${studyType}) — العدد: ${filtered.length} طالب</span>
+                    <button onclick="deleteGroup('${groupName}', '${studyType}')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-[11px] font-bold shadow">🗑️ حذف جميع طلاب هذه الشعبة</button>
+                </div>
+                <table class="w-full text-right bg-white rounded-lg overflow-hidden border">
+                    <thead class="bg-slate-100 font-bold text-[11px]">
+                        <tr>
+                            <th class="p-2 w-10">ت</th>
+                            <th class="p-2">اسم الطالب</th>
+                            <th class="p-2">نقل إلى شعبة / دراسة / مرحلة</th>
+                            <th class="p-2 w-20">حذف</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y text-[11px]">
+                        ${filtered.map((st, idx) => `
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-2 font-bold">${idx + 1}</td>
+                                <td class="p-2 font-bold text-slate-900">${st.name}</td>
+                                <td class="p-2 flex flex-wrap gap-1 items-center">
+                                    <select id="moveStage_${st.id}" class="p-1 border rounded bg-white font-bold text-emerald-900">
+                                        <option value="المرحلة الأولى" ${normalizeStage(st.stage)==='المرحلة الأولى'?'selected':''}>المرحلة الأولى</option>
+                                        <option value="المرحلة الثانية" ${normalizeStage(st.stage)==='المرحلة الثانية'?'selected':''}>المرحلة الثانية</option>
+                                    </select>
+                                    <select id="moveGrp_${st.id}" class="p-1 border rounded bg-white font-bold">
+                                        ${['A1','A2','B1','B2','C1','C2','D1','D2'].map(g => `<option value="${g}" ${st.group===g?'selected':''}>${g}</option>`).join('')}
+                                    </select>
+                                    <select id="moveStudy_${st.id}" class="p-1 border rounded bg-white font-bold">
+                                        <option value="صباحي" ${(st.study||'صباحي')==='صباحي'?'selected':''}>صباحي</option>
+                                        <option value="مسائي" ${st.study==='مسائي'?'selected':''}>مسائي</option>
+                                    </select>
+                                    <button onclick="transferStudent('${st.id}', '${groupName}', '${studyType}')" class="bg-emerald-700 hover:bg-emerald-800 text-white px-2.5 py-1 rounded font-bold">نقل ⇄</button>
+                                </td>
+                                <td class="p-2">
+                                    <button onclick="deleteSingleStudent('${st.id}', '${groupName}', '${studyType}')" class="bg-red-100 hover:bg-red-200 text-red-700 px-2 py-1 rounded font-bold">حذف 🗑️</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
         }
 
-        function deleteSingleStudent(studentId) {
-            if(confirm('حذف هذا الطالب نهائياً؟')) {
-                db.students = (db.students || []).filter(s => String(s.id) !== String(studentId));
-                saveToCloud('students');
-                renderUI();
-                generateAdminMemo();
-                renderAuditButtons(currentAuditStage);
-                let currentPreviewGroup = document.getElementById('activePreviewGroupCache') ? document.getElementById('activePreviewGroupCache').value : null;
-                let currentPreviewStudy = document.getElementById('activePreviewStudyCache') ? document.getElementById('activePreviewStudyCache').value : null;
-                if(currentPreviewGroup && currentPreviewStudy) {
-                    previewGroupStudents(currentAuditStage, currentPreviewGroup, currentPreviewStudy);
-                }
-            }
-        }
+        function transferStudent(studentId, prevGroup, prevStudy) {
+            const st = db.students.find(s => String(s.id) === String(studentId));
+            if(!st) return;
+            const newStage = document.getElementById(`moveStage_${studentId}`).value;
+            const newGroup = document.getElementById(`moveGrp_${studentId}`).value;
+            const newStudy = document.getElementById(`moveStudy_${studentId}`).value;
 
-        function updateStudentGroupAndStudy(studentId, newGroup, newStudy) {
-            let s = (db.students || []).find(x => String(x.id) === String(studentId));
-            if(s) {
-                s.group = newGroup;
-                s.study = newStudy;
-                saveToCloud('students');
-                renderUI();
-                generateAdminMemo();
-                renderAuditButtons(currentAuditStage);
-                
-                let currentPreviewGroup = document.getElementById('activePreviewGroupCache') ? document.getElementById('activePreviewGroupCache').value : null;
-                let currentPreviewStudy = document.getElementById('activePreviewStudyCache') ? document.getElementById('activePreviewStudyCache').value : null;
-                if(currentPreviewGroup && currentPreviewStudy) {
-                    previewGroupStudents(currentAuditStage, currentPreviewGroup, currentPreviewStudy);
-                }
-
-                alert(`✅ تم نقل الطالب (${s.name}) إلى شعبة ${newGroup} (${newStudy}) مع الاحتفاظ التام بغياباته وسجلاته.`);
-            }
+            st.stage = newStage;
+            st.group = newGroup;
+            st.study = newStudy;
+            saveToCloud('students');
+            renderAuditButtons(currentAuditStage);
+            previewGroupStudents(prevGroup, prevStudy);
+            renderUI();
         }
 
         function addNewStudentManually() {
-            let nameInput = document.getElementById('manualStudentName');
-            let name = nameInput.value.trim();
-            if(!name) {
-                alert('يرجى إدخال اسم الطالب الكامل.');
+            const name = document.getElementById('manualStudentName').value.trim();
+            const stage = normalizeStage(document.getElementById('manualStudentStage').value);
+            const group = document.getElementById('manualStudentGroup').value;
+            const study = document.getElementById('manualStudentStudy').value;
+
+            if(!name) { alert('يرجى إدخال اسم الطالب الثلاثي'); return; }
+            if(!db.students) db.students = [];
+
+            // ✅ التحقق من التكرار في نفس المرحلة والشعبة والدراسة فقط (حتى لا يدمج المرحلة الأولى مع الثانية)
+            const existsInSameStage = db.students.some(s =>
+                normalizeStage(s.stage) === stage &&
+                s.name.trim() === name &&
+                s.group === group &&
+                (s.study || 'صباحي') === study
+            );
+            if(existsInSameStage) {
+                alert(`⚠️ الطالب (${name}) موجود مسبقاً في (${stage} - شعبة ${group} - ${study})!`);
                 return;
             }
-            let stage = document.getElementById('manualStudentStage').value;
-            let group = document.getElementById('manualStudentGroup').value;
-            let study = document.getElementById('manualStudentStudy').value;
-
-            if(!db.students) db.students = [];
 
             db.students.push({
                 id: generateUniqueStudentId(db.students.length),
-                name: name,
-                stage: stage,
-                group: group,
-                study: study,
+                name,
+                stage,
+                group,
+                study,
                 absenceHours: 0,
                 attendanceLog: []
             });
 
             saveToCloud('students');
-            nameInput.value = '';
-            renderUI();
-            generateAdminMemo();
+            document.getElementById('manualStudentName').value = "";
             renderAuditButtons(currentAuditStage);
-            previewGroupStudents(stage, group, study);
-            alert(`✅ تمت إضافة الطالب (${name}) إلى (${stage} - شعبة ${group} - ${study}) بنجاح!`);
+            renderUI();
+            alert(`✅ تم إضافة الطالب (${name}) إلى (${stage} - شعبة ${group} - ${study}) بنجاح!`);
         }
 
-        function matchesGroup(sg, selG) { if(selG === 'ALL') return true; return sg && sg.startsWith(selG); }
-        function matchesStudy(ss, selS) { if(selS === 'ALL') return true; return (ss || 'صباحي') === selS; }
+        function deleteSingleStudent(studentId, refreshGroup = null, refreshStudy = null) {
+            const idx = db.students.findIndex(s => String(s.id) === String(studentId));
+            if(idx === -1) return;
+            const stName = db.students[idx].name;
+            if(!confirm(`⚠️ هل أنت متأكد من حذف الطالب (${stName}) نهائياً؟`)) return;
 
-        function updateWeeksDropdown() {
-            let weeksSet = new Set();
-            if(db.students) {
-                db.students.forEach(s => {
-                    (s.attendanceLog || []).forEach(l => { if(l.week) weeksSet.add(l.week); });
-                });
-            }
-            let sortedWeeks = Array.from(weeksSet).sort();
+            db.students.splice(idx, 1);
+            saveToCloud('students');
+            renderAuditButtons(currentAuditStage);
+            if(refreshGroup && refreshStudy) previewGroupStudents(refreshGroup, refreshStudy);
+            renderUI();
+            generateAdminMemo();
+        }
 
-            let weekSel = document.getElementById('exportWeek');
-            if(weekSel) {
-                let prevVal = weekSel.value;
-                let optionsHtml = `<option value="ALL">جميع الأسابيع</option>`;
-                sortedWeeks.forEach(w => optionsHtml += `<option value="${w}">${w}</option>`);
-                weekSel.innerHTML = optionsHtml;
-                if (prevVal && (prevVal === 'ALL' || weeksSet.has(prevVal))) weekSel.value = prevVal;
-            }
+        function deleteGroup(groupName, studyType) {
+            const targetCount = (db.students || []).filter(s =>
+                normalizeStage(s.stage) === currentAuditStage &&
+                s.group === groupName &&
+                (s.study || 'صباحي') === studyType
+            ).length;
 
-            let memoWeekSel = document.getElementById('memoFilterWeek');
-            if(memoWeekSel) {
-                let prevMemoVal = memoWeekSel.value;
-                let optionsHtml = `<option value="ALL">كافة الأسابيع (تراكمي)</option>`;
-                sortedWeeks.forEach(w => optionsHtml += `<option value="${w}">${w}</option>`);
-                memoWeekSel.innerHTML = optionsHtml;
-                if (prevMemoVal && (prevMemoVal === 'ALL' || weeksSet.has(prevMemoVal))) memoWeekSel.value = prevMemoVal;
+            if(targetCount === 0) return;
+            if(!confirm(`⚠️ تحذير: سيتم حذف جميع طلاب (${currentAuditStage} - شعبة ${groupName} - ${studyType}) وعددهم (${targetCount}) طالب. هل أنت متأكد؟`)) return;
+
+            db.students = db.students.filter(s => !(
+                normalizeStage(s.stage) === currentAuditStage &&
+                s.group === groupName &&
+                (s.study || 'صباحي') === studyType
+            ));
+
+            saveToCloud('students');
+            renderAuditButtons(currentAuditStage);
+            previewGroupStudents(groupName, studyType);
+            renderUI();
+            generateAdminMemo();
+        }
+
+        // 📊 رفع قوام الطلاب من إكسل مع الفصل التام حسب المرحلة المختارة
+        function uploadOrUpdateExcel() {
+            if(!isInitialLoadDone) {
+                alert("⚠️ انتظر اكتمال تحميل البيانات من السحابة أولاً.");
+                return;
             }
+            const fileInput = document.getElementById('exFile');
+            const file = fileInput.files[0];
+            if(!file) { alert('يرجى اختيار ملف Excel (.xlsx / .xls / .csv) أولاً.'); return; }
+
+            const selectedStage = normalizeStage(document.getElementById('exStage').value);
+            const selectedGroup = document.getElementById('exGroup').value;
+            const selectedStudy = document.getElementById('exStudy').value;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+
+                    let addedCount = 0;
+                    let skippedCount = 0;
+                    if(!db.students) db.students = [];
+
+                    rows.forEach((row, rIdx) => {
+                        if(!row || row.length === 0) return;
+                        let candidateName = "";
+                        for(let c = 0; c < row.length; c++) {
+                            let cellVal = String(row[c] || '').trim();
+                            if(cellVal && isNaN(cellVal) && cellVal.length > 2) {
+                                candidateName = cellVal;
+                                break;
+                            }
+                        }
+                        if(!candidateName) return;
+                        const lowerHeader = candidateName.toLowerCase();
+                        if(lowerHeader === 'اسم الطالب' || lowerHeader === 'الاسم' || lowerHeader === 'name' || lowerHeader === 'student name') return;
+
+                        // ✅ الفحص يتم داخل نفس المرحلة المختارة فقط! فلا يدمج طلاب المرحلة الأولى مع الثانية أبداً
+                        const alreadyExistsInSameStage = db.students.some(s =>
+                            normalizeStage(s.stage) === selectedStage &&
+                            s.name.trim() === candidateName &&
+                            s.group === selectedGroup &&
+                            (s.study || 'صباحي') === selectedStudy
+                        );
+
+                        if(alreadyExistsInSameStage) {
+                            skippedCount++;
+                        } else {
+                            db.students.push({
+                                id: generateUniqueStudentId(db.students.length + rIdx),
+                                name: candidateName,
+                                stage: selectedStage,
+                                group: selectedGroup,
+                                study: selectedStudy,
+                                absenceHours: 0,
+                                attendanceLog: []
+                            });
+                            addedCount++;
+                        }
+                    });
+
+                    saveToCloud('students');
+                    fileInput.value = "";
+                    switchStageAudit(selectedStage);
+                    previewGroupStudents(selectedGroup, selectedStudy);
+                    renderUI();
+                    alert(`✅ اكتملت العملية بنجاح لـ (${selectedStage} - شعبة ${selectedGroup} - ${selectedStudy}):\n• تم إضافة: ${addedCount} طالب جديد.\n• تم تخطي المكرر في نفس المرحلة: ${skippedCount}.`);
+                } catch(err) {
+                    alert("❌ حدث خطأ أثناء قراءة ملف الإكسل: " + err.message);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function matchesGroup(studentGroup, filterGroup) {
+            if(!filterGroup || filterGroup === 'ALL') return true;
+            if(studentGroup === filterGroup) return true;
+            if(['A', 'B', 'C', 'D'].includes(filterGroup)) return studentGroup && studentGroup.startsWith(filterGroup);
+            return false;
+        }
+
+        function matchesStudy(studentStudy, filterStudy) {
+            if(!filterStudy || filterStudy === 'ALL') return true;
+            return (studentStudy || 'صباحي') === filterStudy;
         }
 
         function toggleTimeInputs() {
@@ -2510,162 +2768,140 @@
             document.getElementById('dateRangeDiv').classList.toggle('hidden', mode !== 'DATE_RANGE');
         }
 
-        function switchStageAudit(stageName) {
-            currentAuditStage = stageName;
-            document.getElementById('btnStage1').className = stageName === 'المرحلة الأولى' ? "px-3 py-1 bg-emerald-800 text-white rounded font-bold" : "px-3 py-1 bg-slate-200 text-slate-700 rounded font-bold";
-            document.getElementById('btnStage2').className = stageName === 'المرحلة الثانية' ? "px-3 py-1 bg-emerald-800 text-white rounded font-bold" : "px-3 py-1 bg-slate-200 text-slate-700 rounded font-bold";
-            renderAuditButtons(stageName);
-            document.getElementById('groupPreviewArea').innerHTML = `<p class="text-slate-400 text-center py-4">اختر الشعبة والدراسة للتدقيق والإدارة.</p>`;
-        }
-
-        function renderAuditButtons(stageName) {
-            let container = document.getElementById('auditButtonsContainer');
-            let groups = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2'];
-            container.innerHTML = `
-                <div class="space-y-2">
-                    ${groups.map(g => `
-                        <div class="flex items-center justify-between border-b pb-1">
-                            <span class="font-bold w-10 text-emerald-900">${g}:</span>
-                            <div class="space-x-1 space-x-reverse">
-                                <button onclick="previewGroupStudents('${stageName}', '${g}', 'صباحي')" class="bg-slate-100 hover:bg-emerald-800 hover:text-white px-2.5 py-1 rounded border font-bold text-[11px]">صباحي</button>
-                                <button onclick="previewGroupStudents('${stageName}', '${g}', 'مسائي')" class="bg-slate-100 hover:bg-emerald-800 hover:text-white px-2.5 py-1 rounded border font-bold text-[11px]">مسائي</button>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-
-        function previewGroupStudents(stageName, grpName, studyType) {
-            const groupStudents = (db.students || []).filter(s => (s.stage || 'المرحلة الأولى') === stageName && s.group === grpName && (s.study || 'صباحي') === studyType);
-            let area = document.getElementById('groupPreviewArea');
-            
-            let cacheHtml = `
-                <input type="hidden" id="activePreviewGroupCache" value="${grpName}">
-                <input type="hidden" id="activePreviewStudyCache" value="${studyType}">
-            `;
-
-            if(groupStudents.length === 0) {
-                area.innerHTML = cacheHtml + `<p class="text-slate-400 text-center py-4">لا توجد أسماء مسجلة في (${stageName} - شعبة ${grpName} - ${studyType}). يمكنك إضافتهم يدوياً من الأعلى.</p>`;
-                return;
-            }
-
-            let groupsOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2'];
-
-            area.innerHTML = cacheHtml + `
-                <div class="font-bold text-emerald-900 mb-2 pb-1 border-b flex justify-between items-center">
-                    <span>قائمة طلاب (${stageName} - شعبة ${grpName} - ${studyType}) - العدد: ${groupStudents.length}</span>
-                </div>
-                <div class="space-y-1.5">
-                    ${groupStudents.map((s) => `
-                        <div class="bg-white p-2 rounded border flex flex-wrap justify-between items-center text-xs shadow-sm gap-2">
-                            <span class="font-bold text-slate-800">${s.name}</span>
-                            <div class="flex items-center gap-1.5">
-                                <span class="text-[10px] text-slate-500">نقل إلى:</span>
-                                <select onchange="updateStudentGroupAndStudy('${s.id}', this.value, '${s.study || 'صباحي'}')" class="p-1 border rounded text-[10px] bg-slate-50 font-bold">
-                                    ${groupsOptions.map(g => `<option value="${g}" ${g === s.group ? 'selected' : ''}>شعبة ${g}</option>`).join('')}
-                                </select>
-                                <select onchange="updateStudentGroupAndStudy('${s.id}', '${s.group}', this.value)" class="p-1 border rounded text-[10px] bg-slate-50 font-bold text-emerald-900">
-                                    <option value="صباحي" ${(s.study || 'صباحي') === 'صباحي' ? 'selected' : ''}>صباحي</option>
-                                    <option value="مسائي" ${s.study === 'مسائي' ? 'selected' : ''}>مسائي</option>
-                                </select>
-                                <button onclick="deleteSingleStudent('${s.id}')" class="text-red-600 hover:bg-red-50 font-bold px-2 py-1 border border-red-200 rounded text-[10px]">حذف 🗑️</button>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-
-        function uploadOrUpdateExcel() {
-            const fileInput = document.getElementById('exFile');
-            const file = fileInput.files[0];
-            if(!file) return alert('اختر ملف إكسل أولاً');
-            const targetStage = document.getElementById('exStage').value;
-            const targetGroup = document.getElementById('exGroup').value;
-            const targetStudy = document.getElementById('exStudy').value;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const data = new Uint8Array(e.target.result);
-                const wb = XLSX.read(data, { type: 'array' });
-                const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 });
-                if(!db.students) db.students = [];
-                let addedCount = 0;
-
-                db.students = db.students.filter(s => !((s.stage || 'المرحلة الأولى') === targetStage && s.group === targetGroup && (s.study || 'صباحي') === targetStudy));
-
-                rows.forEach((r, idx) => {
-                    for(let cell of r) {
-                        if(cell && typeof cell === 'string' && cell.trim().length > 3) {
-                            let studentName = cell.trim();
-                            if(!['اسم الطالب', 'الاسم', 'Name'].includes(studentName)) {
-                                db.students.push({
-                                    id: generateUniqueStudentId(idx),
-                                    name: studentName,
-                                    stage: targetStage,
-                                    group: targetGroup,
-                                    study: targetStudy,
-                                    absenceHours: 0,
-                                    attendanceLog: []
-                                });
-                                addedCount++;
-                                break;
-                            }
-                        }
-                    }
+        function updateWeeksDropdown() {
+            let weeksSet = new Set();
+            for(let i = 1; i <= 15; i++) weeksSet.add(`الأسبوع ${i}`);
+            (db.students || []).forEach(s => {
+                (s.attendanceLog || []).forEach(l => {
+                    if(l.week) weeksSet.add(l.week);
                 });
-                saveToCloud('students');
-                renderUI();
-                generateAdminMemo();
-                renderAuditButtons(currentAuditStage);
-                previewGroupStudents(targetStage, targetGroup, targetStudy);
-                alert(`✅ تم رفع (${addedCount}) طالب بنجاح! المجموع الكلي الآن: ${db.students.length} طالب.`);
-            };
-            reader.readAsArrayBuffer(file);
+            });
+
+            const weeksArr = Array.from(weeksSet);
+            const expWeek = document.getElementById('exportWeek');
+            const memoWeek = document.getElementById('memoFilterWeek');
+
+            if(expWeek) {
+                const prev = expWeek.value;
+                expWeek.innerHTML = `<option value="ALL">اختر الأسبوع</option>` + weeksArr.map(w => `<option value="${w}">${w}</option>`).join('');
+                if(prev) expWeek.value = prev;
+            }
+            if(memoWeek) {
+                const prevM = memoWeek.value;
+                memoWeek.innerHTML = `<option value="ALL">كافة الأسابيع (تراكمي)</option>` + weeksArr.map(w => `<option value="${w}">${w}</option>`).join('');
+                if(prevM) memoWeek.value = prevM;
+            }
         }
 
         function exportWeeklyAttendanceExcel() {
             if(!db.students || db.students.length === 0) return alert('لا توجد بيانات طلاب للتصدير');
 
+            let selStage = document.getElementById('exportStage') ? document.getElementById('exportStage').value : 'ALL';
             let selGroup = document.getElementById('exportGroup').value;
             let selStudy = document.getElementById('exportStudy').value;
             let selSubject = document.getElementById('exportSubjectFilter').value;
             let searchQuery = document.getElementById('searchStudentName') ? document.getElementById('searchStudentName').value.trim().toLowerCase() : '';
             let onlyAbsentChecked = document.getElementById('filterOnlyAbsentInPeriod') ? document.getElementById('filterOnlyAbsentInPeriod').checked : false;
             let timeFilter = getActiveTimeFilter();
-            let subjects = getDefinedSubjectsList();
+
+            let subjectsList = getDefinedSubjectsList(selStage);
+            if(selSubject !== 'ALL') {
+                subjectsList = subjectsList.filter(sub => checkSubjectMatch(sub, selSubject));
+            }
 
             let exportRows = [];
-            db.students.forEach(s => {
-                if (!matchesGroup(s.group, selGroup) || !matchesStudy(s.study, selStudy)) return;
-                if (searchQuery && !(s.name && s.name.toLowerCase().includes(searchQuery))) return;
+            let idx = 1;
 
-                let rowObj = {
+            db.students.forEach(s => {
+                if(!matchesStage(s.stage, selStage)) return;
+                if(!matchesGroup(s.group, selGroup)) return;
+                if(!matchesStudy(s.study, selStudy)) return;
+                if(searchQuery && !(s.name && s.name.toLowerCase().includes(searchQuery))) return;
+
+                let row = {
+                    "ت": idx,
                     "اسم الطالب": s.name,
-                    "المرحلة": s.stage || 'المرحلة الأولى',
+                    "المرحلة": normalizeStage(s.stage),
                     "الشعبة": s.group,
                     "الدراسة": s.study || 'صباحي'
                 };
 
-                let totalHoursInFilter = 0;
-                subjects.forEach(sub => {
-                    if (selSubject !== 'ALL' && !checkSubjectMatch(sub, selSubject)) return;
+                let hasAnyAbsence = false;
+                subjectsList.forEach(sub => {
                     let res = calculatePenaltyForSubject(s, sub, timeFilter.startDate, timeFilter.endDate, timeFilter.week);
-                    rowObj[sub] = `${res.absenceHours} ساعات (${res.percentage}%) - ${res.penalty}`;
-                    totalHoursInFilter += res.absenceHours;
+                    row[`${sub} (ساعات الغياب)`] = res.absenceHours;
+                    row[`${sub} (النسبة %)`] = `${res.percentage}%`;
+                    row[`${sub} (العقوبة)`] = res.penalty;
+                    if(res.absenceHours > 0) hasAnyAbsence = true;
                 });
 
-                if (onlyAbsentChecked && totalHoursInFilter === 0) return;
-                exportRows.push(rowObj);
+                if(onlyAbsentChecked && !hasAnyAbsence) return;
+                idx++;
+                exportRows.push(row);
             });
 
-            if (exportRows.length === 0) return alert('لا توجد بيانات مطابقة للتصفية الحالية.');
+            if(exportRows.length === 0) {
+                alert('لا توجد بيانات مطابقة للتصدير.');
+                return;
+            }
 
-            const worksheet = XLSX.utils.json_to_sheet(exportRows);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, "الغيابات");
-            XLSX.writeFile(workbook, `تقرير_الغيابات_المفصل.xlsx`);
+            const ws = XLSX.utils.json_to_sheet(exportRows);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "تقرير الغيابات");
+            XLSX.writeFile(wb, `تقرير_غيابات_الطلبة_${selStage}_${selGroup}.xlsx`);
+        }
+
+        function showStudentModal(studentId) {
+            const st = db.students.find(s => String(s.id) === String(studentId));
+            if(!st) return;
+            activeStudentId = st.id;
+            document.getElementById('modalStudentTitle').innerText = `سجل غيابات: ${st.name} (${normalizeStage(st.stage)} - شعبة ${st.group} - ${st.study || 'صباحي'})`;
+
+            const grid = document.getElementById('modalCalendarGrid');
+            const logs = st.attendanceLog || [];
+
+            if(logs.length === 0) {
+                grid.innerHTML = `<p class="col-span-2 text-center text-slate-400 py-6 font-bold">لا توجد سجلات حضور أو غياب مسجلة لهذا الطالب بعد.</p>`;
+            } else {
+                grid.innerHTML = logs.map((log, idx) => {
+                    const isAbsent = log.status === 'ABSENT';
+                    return `
+                        <div class="p-3 rounded-xl border ${isAbsent ? 'bg-red-50 border-red-300' : 'bg-emerald-50 border-emerald-200'} space-y-1.5">
+                            <div class="flex justify-between items-center font-bold">
+                                <span class="text-slate-900">${log.subject || 'مادة'}</span>
+                                <span class="text-[10px] font-mono text-slate-500">${log.date || ''} (${log.week || ''})</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-1">
+                                <span class="font-extrabold ${isAbsent ? 'text-red-700' : 'text-emerald-800'}">
+                                    ${isAbsent ? `❌ غائب (${getLogHours(log)} ساعات)` : '✅ حاضر'}
+                                </span>
+                                <button onclick="toggleStudentLogStatus(${idx})" class="bg-white border border-slate-300 hover:bg-slate-100 px-2.5 py-1 rounded-lg font-bold text-[11px] shadow-sm">
+                                    تغيير إلى ${isAbsent ? 'حاضر ✅' : 'غائب ❌'}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            document.getElementById('studentModal').classList.remove('hidden');
+        }
+
+        function toggleStudentLogStatus(logIdx) {
+            const st = db.students.find(s => String(s.id) === String(activeStudentId));
+            if(!st || !st.attendanceLog || !st.attendanceLog[logIdx]) return;
+
+            st.attendanceLog[logIdx].status = st.attendanceLog[logIdx].status === 'ABSENT' ? 'PRESENT' : 'ABSENT';
+            recalculateStudentAbsenceHours(st);
+            saveToCloud('students');
+            showStudentModal(st.id);
+            renderUI();
+            generateAdminMemo();
+        }
+
+        function closeModal() {
+            activeStudentId = null;
+            document.getElementById('studentModal').classList.add('hidden');
         }
     </script>
 </body>
